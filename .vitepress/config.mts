@@ -8,6 +8,8 @@ export default defineConfigWithTheme({
   extends: escookConfig,
   title: "winter",
   description: "winter系列开源说明",
+  // 添加 base 配置，用于 GitHub Pages 部署
+  base: '/open-source/',
   themeConfig: {
     // 4. 通过此配置项，启用背景音乐的小组件
     musicBall: {
