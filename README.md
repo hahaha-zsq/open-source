@@ -6,16 +6,20 @@
 
 ```bash
 # 安装依赖
-npm install
+pnpm install
 
 # 启动开发服务器
-npm run docs:dev
+pnpm run docs:dev
 
 # 构建生产版本
-npm run docs:build
+pnpm run docs:build
 
 # 预览生产版本
-npm run docs:preview
+pnpm run docs:preview
+
+# 测试构建（推荐在部署前运行）
+chmod +x test-build.sh
+./test-build.sh
 ```
 
 ## GitHub Pages 部署
@@ -83,6 +87,7 @@ chmod +x deploy.sh
 ├── api-examples.md        # API 示例
 ├── deploy.sh              # 完整部署脚本
 ├── trigger-deploy.sh      # 快速部署脚本
+├── test-build.sh          # 测试构建脚本
 └── package.json
 ```
 
@@ -105,4 +110,5 @@ chmod +x deploy.sh
 - 确保 `base` 路径与您的仓库名称匹配
 - 如果修改了仓库名称，请同时更新 `.vitepress/config.mts` 中的 `base` 配置
 - 部署可能需要几分钟时间，请耐心等待
-- 如果遇到 GitHub Actions 语法错误，请检查 `.github/workflows/deploy.yml` 文件的 YAML 格式 
+- 如果遇到 GitHub Actions 语法错误，请检查 `.github/workflows/deploy.yml` 文件的 YAML 格式
+- 项目使用 `pnpm` 作为包管理器，确保使用 `pnpm` 命令而不是 `npm` 
