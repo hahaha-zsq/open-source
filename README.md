@@ -26,18 +26,27 @@ chmod +x test-build.sh
 
 本项目已配置自动部署到 GitHub Pages。部署步骤如下：
 
-### 1. 仓库设置
+### 1. 生成 package-lock.json（首次部署需要）
+
+如果遇到 `npm ci` 错误，请先运行：
+
+```bash
+chmod +x generate-lockfile.sh
+./generate-lockfile.sh
+```
+
+### 2. 仓库设置
 
 确保您的 GitHub 仓库名为 `open-source`（与 base 路径匹配）。
 
-### 2. 启用 GitHub Pages
+### 3. 启用 GitHub Pages
 
 1. 进入您的 GitHub 仓库
 2. 点击 "Settings" 标签
 3. 在左侧菜单中找到 "Pages"
 4. 在 "Source" 部分选择 "GitHub Actions"
 
-### 3. 推送代码
+### 4. 推送代码
 
 将代码推送到 `master` 分支：
 
@@ -47,7 +56,7 @@ git commit -m "Initial commit"
 git push origin master
 ```
 
-### 4. 使用部署脚本（推荐）
+### 5. 使用部署脚本（推荐）
 
 项目提供了便捷的部署脚本：
 
@@ -66,7 +75,7 @@ chmod +x deploy.sh
 ./deploy.sh
 ```
 
-### 5. 查看部署
+### 6. 查看部署
 
 - 部署完成后，您的网站将可通过 `https://[您的用户名].github.io/open-source/` 访问
 - 您可以在仓库的 "Actions" 标签中查看部署进度
@@ -88,6 +97,7 @@ chmod +x deploy.sh
 ├── deploy.sh              # 完整部署脚本
 ├── trigger-deploy.sh      # 快速部署脚本
 ├── test-build.sh          # 测试构建脚本
+├── generate-lockfile.sh   # 生成 lock 文件脚本
 └── package.json
 ```
 
@@ -111,4 +121,5 @@ chmod +x deploy.sh
 - 如果修改了仓库名称，请同时更新 `.vitepress/config.mts` 中的 `base` 配置
 - 部署可能需要几分钟时间，请耐心等待
 - 如果遇到 GitHub Actions 语法错误，请检查 `.github/workflows/deploy.yml` 文件的 YAML 格式
-- 项目使用 `pnpm` 作为包管理器，确保使用 `pnpm` 命令而不是 `npm` 
+- 项目使用 `pnpm` 作为包管理器，但 GitHub Actions 使用 `npm` 以确保兼容性
+- 首次部署前请运行 `./generate-lockfile.sh` 生成 `package-lock.json` 文件 
