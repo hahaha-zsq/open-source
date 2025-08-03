@@ -35,12 +35,12 @@ npm run docs:preview
 
 ### 3. 推送代码
 
-将代码推送到 `main` 分支：
+将代码推送到 `master` 分支：
 
 ```bash
 git add .
 git commit -m "Initial commit"
-git push origin main
+git push origin master
 ```
 
 ### 4. 使用部署脚本（推荐）

@@ -24,17 +24,38 @@ fi
 CURRENT_BRANCH=$(git branch --show-current)
 echo "📍 当前分支: $CURRENT_BRANCH"
 
-# 如果不是 main 分支，切换到 main 分支
-if [ "$CURRENT_BRANCH" != "main" ]; then
-    echo "🔄 切换到 main 分支..."
-    git checkout main
+# 检查是否存在 master 分支
+if ! git show-ref --verify --quiet refs/heads/master; then
+    echo "🔄 master 分支不存在，正在创建..."
+    # 如果当前分支不是 master，创建并切换到 master 分支
+    if [ "$CURRENT_BRANCH" != "master" ]; then
+        git checkout -b master
+    fi
+else
+    # 如果 master 分支存在但当前不在 master 分支，切换到 master 分支
+    if [ "$CURRENT_BRANCH" != "master" ]; then
+        echo "🔄 切换到 master 分支..."
+        git checkout master
+    fi
+fi
+
+# 检查远程仓库是否已设置
+if ! git remote get-url origin > /dev/null 2>&1; then
+    echo "❌ 错误：未设置远程仓库"
+    echo "请先设置远程仓库："
+    echo "  git remote add origin https://github.com/[您的用户名]/open-source.git"
+    exit 1
 fi
 
 # 推送到远程仓库
 echo "📤 推送到 GitHub..."
-git push origin main
+if git push -u origin master; then
+    echo "✅ 代码已成功推送到 GitHub"
+else
+    echo "❌ 推送失败，请检查远程仓库设置和权限"
+    exit 1
+fi
 
-echo "✅ 代码已推送到 GitHub"
 echo ""
 echo "📋 接下来需要手动操作："
 echo "1. 进入 GitHub 仓库页面"
