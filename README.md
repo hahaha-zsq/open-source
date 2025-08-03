@@ -26,7 +26,16 @@ chmod +x test-build.sh
 
 本项目已配置自动部署到 GitHub Pages。部署步骤如下：
 
-### 1. 生成 package-lock.json（首次部署需要）
+### 1. 修复依赖问题（如果遇到 npm ci 错误）
+
+如果遇到依赖同步错误，请运行：
+
+```bash
+chmod +x fix-dependencies.sh
+./fix-dependencies.sh
+```
+
+### 2. 生成 package-lock.json（首次部署需要）
 
 如果遇到 `npm ci` 错误，请先运行：
 
@@ -35,18 +44,18 @@ chmod +x generate-lockfile.sh
 ./generate-lockfile.sh
 ```
 
-### 2. 仓库设置
+### 3. 仓库设置
 
 确保您的 GitHub 仓库名为 `open-source`（与 base 路径匹配）。
 
-### 3. 启用 GitHub Pages
+### 4. 启用 GitHub Pages
 
 1. 进入您的 GitHub 仓库
 2. 点击 "Settings" 标签
 3. 在左侧菜单中找到 "Pages"
 4. 在 "Source" 部分选择 "GitHub Actions"
 
-### 4. 推送代码
+### 5. 推送代码
 
 将代码推送到 `master` 分支：
 
@@ -56,7 +65,7 @@ git commit -m "Initial commit"
 git push origin master
 ```
 
-### 5. 使用部署脚本（推荐）
+### 6. 使用部署脚本（推荐）
 
 项目提供了便捷的部署脚本：
 
@@ -75,7 +84,7 @@ chmod +x deploy.sh
 ./deploy.sh
 ```
 
-### 6. 查看部署
+### 7. 查看部署
 
 - 部署完成后，您的网站将可通过 `https://[您的用户名].github.io/open-source/` 访问
 - 您可以在仓库的 "Actions" 标签中查看部署进度
@@ -98,6 +107,7 @@ chmod +x deploy.sh
 ├── trigger-deploy.sh      # 快速部署脚本
 ├── test-build.sh          # 测试构建脚本
 ├── generate-lockfile.sh   # 生成 lock 文件脚本
+├── fix-dependencies.sh    # 修复依赖问题脚本
 └── package.json
 ```
 
@@ -115,6 +125,29 @@ chmod +x deploy.sh
 
 在 `themeConfig.sidebar` 数组中配置侧边栏结构。
 
+## 故障排除
+
+### npm ci 错误
+
+如果遇到 `npm ci` 错误，通常是因为：
+1. `package-lock.json` 文件不存在
+2. `package-lock.json` 与 `package.json` 不同步
+3. 缺少依赖项
+
+**解决方案：**
+```bash
+./fix-dependencies.sh
+```
+
+### 依赖同步问题
+
+如果遇到依赖同步问题，运行：
+```bash
+rm -f package-lock.json
+rm -rf node_modules
+npm install
+```
+
 ## 注意事项
 
 - 确保 `base` 路径与您的仓库名称匹配
@@ -122,4 +155,4 @@ chmod +x deploy.sh
 - 部署可能需要几分钟时间，请耐心等待
 - 如果遇到 GitHub Actions 语法错误，请检查 `.github/workflows/deploy.yml` 文件的 YAML 格式
 - 项目使用 `pnpm` 作为包管理器，但 GitHub Actions 使用 `npm` 以确保兼容性
-- 首次部署前请运行 `./generate-lockfile.sh` 生成 `package-lock.json` 文件 
+- 首次部署前请运行 `./fix-dependencies.sh` 确保依赖正确 

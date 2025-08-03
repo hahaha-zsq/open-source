@@ -32,7 +32,12 @@ jobs:
         uses: actions/configure-pages@v4
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f "package-lock.json" ]; then
+            npm ci || npm install
+          else
+            npm install
+          fi
       
       - name: Build with VitePress
         run: npm run docs:build
