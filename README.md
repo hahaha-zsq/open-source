@@ -43,7 +43,26 @@ git commit -m "Initial commit"
 git push origin main
 ```
 
-### 4. 查看部署
+### 4. 使用部署脚本（推荐）
+
+项目提供了便捷的部署脚本：
+
+```bash
+# 给脚本添加执行权限
+chmod +x trigger-deploy.sh
+
+# 运行部署脚本
+./trigger-deploy.sh
+```
+
+或者使用完整版部署脚本：
+
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+### 5. 查看部署
 
 - 部署完成后，您的网站将可通过 `https://[您的用户名].github.io/open-source/` 访问
 - 您可以在仓库的 "Actions" 标签中查看部署进度
@@ -62,6 +81,8 @@ git push origin main
 ├── index.md               # 首页
 ├── markdown-examples.md   # Markdown 示例
 ├── api-examples.md        # API 示例
+├── deploy.sh              # 完整部署脚本
+├── trigger-deploy.sh      # 快速部署脚本
 └── package.json
 ```
 
@@ -83,4 +104,5 @@ git push origin main
 
 - 确保 `base` 路径与您的仓库名称匹配
 - 如果修改了仓库名称，请同时更新 `.vitepress/config.mts` 中的 `base` 配置
-- 部署可能需要几分钟时间，请耐心等待 
+- 部署可能需要几分钟时间，请耐心等待
+- 如果遇到 GitHub Actions 语法错误，请检查 `.github/workflows/deploy.yml` 文件的 YAML 格式 
