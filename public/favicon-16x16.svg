@@ -1,0 +1,18 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="8" cy="8" r="7" fill="#5f67ee"/>
+  
+  <!-- 简化的雪花图案 -->
+  <g stroke="#ffffff" stroke-width="1" fill="none">
+    <!-- 主要十字架线 -->
+    <line x1="8" y1="3" x2="8" y2="13"/>
+    <line x1="3" y1="8" x2="13" y2="8"/>
+    
+    <!-- 对角线 -->
+    <line x1="5.5" y1="5.5" x2="10.5" y2="10.5"/>
+    <line x1="10.5" y1="5.5" x2="5.5" y2="10.5"/>
+  </g>
+  
+  <!-- 中心点 -->
+  <circle cx="8" cy="8" r="1" fill="#ffffff"/>
+</svg> 

@@ -1,0 +1,41 @@
+/* 支持 details 标签的样式 */
+details {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  background-color: #f6f8fa;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #24292e;
+  margin-bottom: 0.5rem;
+}
+
+details summary:hover {
+  color: #0366d6;
+}
+
+details[open] summary {
+  margin-bottom: 1rem;
+}
+
+details > *:not(summary) {
+  margin-left: 1rem;
+}
+
+/* 暗色主题支持 */
+.dark details {
+  border-color: #30363d;
+  background-color: #21262d;
+}
+
+.dark details summary {
+  color: #c9d1d9;
+}
+
+.dark details summary:hover {
+  color: #58a6ff;
+} 
