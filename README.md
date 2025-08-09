@@ -2,6 +2,47 @@
 
 这是一个使用 VitePress 搭建的文档博客项目。
 
+## 📚 文档目录结构
+
+### 开源项目
+- **Java**
+  - [winter-encrypt-spring-boot-starter](./开源项目/Java/winter-encrypt.md) - Spring Boot 加解密工具包
+  - [winter-log-spring-boot-starter](./开源项目/Java/winter-log.md) - Spring Boot 日志工具包
+- **前端** - React/Vue组件库和工具库
+- **其他** - 算法实现、开发工具、脚本工具
+
+### 后端技术
+- **Java基础知识** - 集合框架、并发编程、JVM调优、设计模式
+- **SpringBoot** - 核心特性、自动配置、Starter开发、监控与管理
+- **SpringCloud** - 服务注册与发现、配置中心、服务网关、分布式链路追踪
+- **中间件**
+  - **RocketMQ** - 消息队列基础、集群部署、性能优化
+  - **Kafka** - 消息流处理、集群管理、监控运维
+  - **Elasticsearch** - 全文搜索、数据分析、集群部署
+  - **XXL-JOB** - 分布式任务调度、任务管理、监控告警
+  - **Minio** - 对象存储、文件管理、集群部署
+
+### 前端技术
+- **React** - 组件开发、Hooks使用、状态管理、性能优化
+- **Vue** - 组件系统、响应式原理、路由管理、状态管理
+
+### 容器技术
+- **Docker** - 容器基础、Dockerfile编写、镜像管理、容器编排
+
+### 代理技术
+- **Nginx** - 基础配置、反向代理、负载均衡、SSL配置
+
+### 数据库技术
+- **MySQL** - 基础操作、索引优化、查询优化、事务处理
+- **Redis** - 数据类型、持久化、集群部署、缓存策略
+
+### 版本控制与协作
+- **Git** - 基础命令、分支管理、合并策略、工作流程
+
+### 开发工具
+- **APIFOX** - API设计、接口测试、文档生成、团队协作
+- **VFOX** - 版本管理、环境切换、多语言支持
+
 ## 本地开发
 
 ```bash
@@ -99,10 +140,32 @@ chmod +x deploy.sh
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml      # GitHub Actions 部署配置
+├── 开源项目/               # 开源项目文档
+│   ├── Java/               # Java项目
+│   ├── 前端/               # 前端项目
+│   └── 其他/               # 其他项目
+├── 后端/                   # 后端技术文档
+│   ├── Java基础知识/
+│   ├── SpringBoot/
+│   ├── SpringCloud/
+│   └── 中间件/
+├── 前端/                   # 前端技术文档
+│   ├── React/
+│   └── Vue/
+├── 容器/                   # 容器技术文档
+│   └── Docker/
+├── 代理/                   # 代理技术文档
+│   └── Nginx/
+├── 数据库/                 # 数据库技术文档
+│   ├── MySQL/
+│   └── Redis/
+├── 版本控制与协作/         # 版本控制文档
+│   └── Git/
+├── 工具/                   # 开发工具文档
+│   ├── APIFOX/
+│   └── VFOX/
 ├── public/                 # 静态资源
 ├── index.md               # 首页
-├── markdown-examples.md   # Markdown 示例
-├── api-examples.md        # API 示例
 ├── deploy.sh              # 完整部署脚本
 ├── trigger-deploy.sh      # 快速部署脚本
 ├── test-build.sh          # 测试构建脚本

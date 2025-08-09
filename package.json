@@ -15,7 +15,8 @@
   "devDependencies": {
     "mermaid": "^11.9.0",
     "vitepress": "^1.6.3",
-    "vitepress-plugin-mermaid": "^2.0.17"
+    "vitepress-plugin-mermaid": "^2.0.17",
+    "vitepress-plugin-music": "^0.0.9"
   },
   "dependencies": {
     "@escook/vitepress-theme": "^1.3.1"
