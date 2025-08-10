@@ -8,8 +8,8 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 export default withMermaid(defineConfigWithTheme({
   // 3. 通过 extends 指定要继承的配置
   extends: escookConfig,
-  title: "winter",
-  description: "winter系列开源说明",
+  title: "Winter 开源技术体系",
+  description: "涵盖后端、前端、运维、数据库、工具等全栈技术的 Winter 系列开源项目与实用教程，助力开发者高效成长。",
   // 添加 base 配置，用于 GitHub Pages 部署
   base: '/open-source/',
   // 添加自定义样式和图标
@@ -42,43 +42,48 @@ export default withMermaid(defineConfigWithTheme({
       { 
         text: '后端技术', 
         items: [
-          { text: '后端总览', link: '/后端/README' },
-          { text: 'Java基础', link: '/后端/Java基础知识/README' },
+          { 
+            text: 'Java基础', 
+            items: [
+              { text: 'Spring事务传播行为', link: '/后端/SpringBoot/Spring事务传播行为' }
+            ]
+          },
           { text: 'SpringBoot', link: '/后端/SpringBoot/README' },
           { text: 'SpringCloud', link: '/后端/SpringCloud/README' },
-          { text: '中间件', link: '/后端/中间件/README' }
+          { text: '中间件', link: '/后端/中间件/RocketMQ/README' }
         ]
       },
       { 
         text: '前端技术', 
         items: [
-          { text: '前端总览', link: '/前端/README' },
-          { text: 'React', link: '/前端/React/README' },
-          { text: 'Vue', link: '/前端/Vue/README' }
+          { 
+            text: 'React', 
+            items: [
+              { text: 'React 组件通信', link: '/前端/React/React的通信方式' }
+            ]
+          },
+          { 
+            text: 'Vue', 
+            items: [
+              { text: 'Vue 基础', link: '/前端/Vue/README' }
+            ]
+          }
         ]
       },
       { 
         text: '运维技术', 
         items: [
-          { text: '容器技术', link: '/容器/README' },
-          { text: '代理技术', link: '/代理/README' },
-          { text: '数据库', link: '/数据库/README' }
+          { text: 'Docker', link: '/容器/Docker/README' },
+          { text: 'Nginx', link: '/代理/Nginx/README' },
+          { text: '数据库', link: '/数据库/MySQL/README' }
         ]
       },
       { 
         text: '工具', 
         items: [
-          { text: '开发工具', link: '/工具/README' },
-          { text: '版本控制', link: '/版本控制与协作/README' }
-        ]
-      },
-      { 
-        text: '博客', 
-        items: [
-          { text: '博客首页', link: '/blog/' },
-          { text: '技术博客', link: '/blog/technical/spring-boot-autoconfiguration' },
-          { text: '使用教程', link: '/blog/tutorials/winter-encrypt-quickstart' },
-          { text: '项目动态', link: '/blog/news/winter-encrypt-v0032-release' }
+          { text: 'APIFOX', link: '/工具/APIFOX/README' },
+          { text: 'VFOX', link: '/工具/VFOX/README' },
+          { text: 'Git', link: '/版本控制与协作/Git/README' }
         ]
       }
     ],
@@ -101,33 +106,26 @@ export default withMermaid(defineConfigWithTheme({
       ],
       '/后端/': [
         {
-          text: '🎯 后端技术',
-          items: [
-            { text: '后端总览', link: '/后端/README' }
-          ]
-        },
-        {
           text: '☕ Java基础知识',
           items: [
-            { text: 'Java基础概览', link: '/后端/Java基础知识/README' }
+            
           ]
         },
         {
           text: '🍃 SpringBoot',
           items: [
-            { text: 'SpringBoot概览', link: '/后端/SpringBoot/README' }
+            { text: 'Spring事务传播行为', link: '/后端/SpringBoot/Spring事务传播行为' }
           ]
         },
         {
           text: '☁️ SpringCloud',
           items: [
-            { text: 'SpringCloud概览', link: '/后端/SpringCloud/README' }
+            { text: 'SpringCloud', link: '/后端/SpringCloud/README' }
           ]
         },
         {
           text: '🔗 中间件',
           items: [
-            { text: '中间件概览', link: '/后端/中间件/README' },
             { text: 'RocketMQ', link: '/后端/中间件/RocketMQ/README' },
             { text: 'Kafka', link: '/后端/中间件/Kafka/README' },
             { text: 'Elasticsearch', link: '/后端/中间件/Elasticsearch/README' },
@@ -138,93 +136,57 @@ export default withMermaid(defineConfigWithTheme({
       ],
       '/前端/': [
         {
-          text: '🎨 前端技术',
-          items: [
-            { text: '前端总览', link: '/前端/README' }
-          ]
-        },
-        {
           text: '⚛️ React',
           items: [
-            { text: 'React概览', link: '/前端/React/README' }
+            { text: 'React 组件通信方式', link: '/前端/React/React的通信方式' }
           ]
         },
         {
           text: '💚 Vue',
           items: [
-            { text: 'Vue概览', link: '/前端/Vue/README' }
+            { text: 'Vue 基础', link: '/前端/Vue/README' }
           ]
         }
       ],
       '/容器/': [
         {
-          text: '📦 容器技术',
-          items: [
-            { text: '容器总览', link: '/容器/README' }
-          ]
-        },
-        {
           text: '🐳 Docker',
           items: [
-            { text: 'Docker概览', link: '/容器/Docker/README' }
+            { text: 'Docker', link: '/容器/Docker/README' }
           ]
         }
       ],
       '/代理/': [
         {
-          text: '🔀 代理技术',
-          items: [
-            { text: '代理总览', link: '/代理/README' }
-          ]
-        },
-        {
           text: '🌐 Nginx',
           items: [
-            { text: 'Nginx概览', link: '/代理/Nginx/README' }
+            { text: 'Nginx', link: '/代理/Nginx/README' }
           ]
         }
       ],
       '/数据库/': [
         {
-          text: '💾 数据库技术',
-          items: [
-            { text: '数据库总览', link: '/数据库/README' }
-          ]
-        },
-        {
           text: '🗄️ MySQL',
           items: [
-            { text: 'MySQL概览', link: '/数据库/MySQL/README' }
+            { text: 'MySQL', link: '/数据库/MySQL/README' }
           ]
         },
         {
           text: '🔴 Redis',
           items: [
-            { text: 'Redis概览', link: '/数据库/Redis/README' }
+            { text: 'Redis', link: '/数据库/Redis/README' }
           ]
         }
       ],
       '/版本控制与协作/': [
         {
-          text: '🔄 版本控制与协作',
-          items: [
-            { text: '协作总览', link: '/版本控制与协作/README' }
-          ]
-        },
-        {
           text: '📚 Git',
           items: [
-            { text: 'Git概览', link: '/版本控制与协作/Git/README' }
+            { text: 'Git', link: '/版本控制与协作/Git/README' }
           ]
         }
       ],
       '/工具/': [
-        {
-          text: '🛠️ 开发工具',
-          items: [
-            { text: '工具总览', link: '/工具/README' }
-          ]
-        },
         {
           text: '🔧 API工具',
           items: [
@@ -236,7 +198,7 @@ export default withMermaid(defineConfigWithTheme({
           items: [
             { text: 'VFOX', link: '/工具/VFOX/README' }
           ]
-        },
+        }
       ],
     },
 

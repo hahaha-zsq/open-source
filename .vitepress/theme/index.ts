@@ -29,6 +29,21 @@ const playlist = [
     name: '再飞行',
     author: '逃跑计划',
     file: '/open-source/music/逃跑计划-再飞行.aac', // 包含base路径的完整路径
+  },
+  {
+    name: 'Nobody',
+    author: 'AI',
+    file: '/open-source/music/AI-Nobody.mp3', // 包含base路径的完整路径
+  },
+  {
+    name: '泪桥',
+    author: 'AI',
+    file: '/open-source/music/AI-泪桥.mp3', // 包含base路径的完整路径
+  },
+    {
+    name: '赛勒斯的爱',
+    author: '张敬轩',
+    file: '/open-source/music/张敬轩-赛勒斯的爱.mp3', // 包含base路径的完整路径
   }
 ]
 
