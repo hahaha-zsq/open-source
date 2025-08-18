@@ -1,6 +1,6 @@
 # 🌨️ winter-encrypt-spring-boot-starter
 
-<div align="center">
+<div class="badge-container" align="center">
 
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html) [![Java support](https://img.shields.io/badge/Java-1.8+-green.svg)](https://openjdk.java.net/) [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg)](https://spring.io/projects/spring-boot) [![Maven Central](https://img.shields.io/maven-central/v/io.github.hahaha-zsq/winter-encrypt-spring-boot-starter.svg)](https://search.maven.org/artifact/io.github.hahaha-zsq/winter-encrypt-spring-boot-starter) [![GitHub stars](https://img.shields.io/github/stars/hahaha-zsq/winter-encrypt-spring-boot-starter.svg?style=social&label=Stars)](https://github.com/hahaha-zsq/winter-encrypt-spring-boot-starter)
 
@@ -8,9 +8,9 @@
 
 > 🔐 一个开箱即用的 Spring Boot 加解密工具包，内置AES/DES/RSA加密算法，支持注解式加解密，提供安全的密钥配置方案，助力数据安全！
 
-<p align="center">
-  <img src="https://img.shields.io/badge/AES-支持-brightgreen" alt="AES"> <img src="https://img.shields.io/badge/DES-支持-brightgreen" alt="DES"> <img src="https://img.shields.io/badge/RSA-支持-brightgreen" alt="RSA"> <img src="https://img.shields.io/badge/注解驱动-支持-blue" alt="注解驱动"> <img src="https://img.shields.io/badge/集合加密-支持-blue" alt="集合加密"> <img src="https://img.shields.io/badge/安全配置-支持-orange" alt="安全配置">
-</p>
+<div class="badge-container" align="center">
+  <img src="https://img.shields.io/badge/AES-支持-brightgreen" alt="AES" loading="lazy"> <img src="https://img.shields.io/badge/DES-支持-brightgreen" alt="DES" loading="lazy"> <img src="https://img.shields.io/badge/RSA-支持-brightgreen" alt="RSA" loading="lazy"> <img src="https://img.shields.io/badge/注解驱动-支持-blue" alt="注解驱动" loading="lazy"> <img src="https://img.shields.io/badge/集合加密-支持-blue" alt="集合加密" loading="lazy"> <img src="https://img.shields.io/badge/安全配置-支持-orange" alt="安全配置" loading="lazy">
+</div>
 
 ## 📚 目录
 

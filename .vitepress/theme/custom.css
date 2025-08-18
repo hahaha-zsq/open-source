@@ -1,41 +1,94 @@
 /* 支持 details 标签的样式 */
 details {
-  margin: 1rem 0;
-  padding: 1rem;
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  background-color: #f6f8fa;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    background-color: #f6f8fa;
 }
 
 details summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: #24292e;
-  margin-bottom: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #24292e;
+    margin-bottom: 0.5rem;
 }
 
 details summary:hover {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 details[open] summary {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 details > *:not(summary) {
-  margin-left: 1rem;
+    margin-left: 1rem;
 }
 
 /* 暗色主题支持 */
 .dark details {
-  border-color: #30363d;
-  background-color: #21262d;
+    border-color: #30363d;
+    background-color: #21262d;
 }
 
 .dark details summary {
-  color: #c9d1d9;
+    color: #c9d1d9;
 }
 
 .dark details summary:hover {
-  color: #58a6ff;
+    color: #58a6ff;
+}
+
+/* 徽章样式 - 确保在一行显示 */
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 1rem 0;
+}
+
+.badge-container img {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+}
+
+/* 图片懒加载样式 */
+img[loading="lazy"] {
+    transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"]:not([src]) {
+    opacity: 0;
+}
+
+/* 确保徽章图片在一行显示 */
+.markdown-body img[src*="badge.fury.io"],
+.markdown-body img[src*="img.shields.io"] {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 2px !important;
+    height: auto !important;
+}
+
+/* 徽章容器样式 */
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 1rem 0;
+    line-height: 1;
+}
+
+/* 响应式徽章布局 */
+@media (max-width: 768px) {
+    .badge-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
 } 

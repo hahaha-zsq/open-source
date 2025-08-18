@@ -22,6 +22,8 @@ import '@escook/vitepress-theme/style.css'
 // 3. import vitepress-plugin-music
 import vitepressMusic from 'vitepress-plugin-music'
 import 'vitepress-plugin-music/lib/css/index.css'
+// 4. 导入自定义样式
+import './custom.css'
 
 // 4. 配置音乐播放列表
 const playlist = [

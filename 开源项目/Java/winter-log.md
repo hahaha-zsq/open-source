@@ -1,6 +1,6 @@
 # 🌟 winter-log-spring-boot-starter
 
-<div align="center">
+<div class="badge-container" align="center">
 
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Java support](https://img.shields.io/badge/Java-1.8+-green.svg)](https://openjdk.java.net/)
