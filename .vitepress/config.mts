@@ -105,6 +105,36 @@ export default withMermaid(defineConfigWithTheme({
                 ]
             },
             {
+                text: '数据库专题',
+                items: [
+                    {
+                        text: '🗄️ MySQL',
+                        items: [
+                            {text: 'MySQL 基础篇', link: '/数据库/MySQL/MySQL基础篇'},
+                            {text: 'MySQL 架构篇', link: '/数据库/MySQL/MySQL架构篇'},
+                            {text: 'MySQL 索引与调优篇', link: '/数据库/MySQL/MySQL索引和调优篇'},
+                            {text: 'MySQL 日志与备份篇', link: '/数据库/MySQL/MySQL日志与备份篇'},
+                            {text: 'MySQL 事务篇', link: '/数据库/MySQL/MySQL事务篇'}
+                        ]
+                    },
+                    {
+                        text: '🔴 Redis',
+                        link: '/面试题/Redis/README'
+                    }
+                ]
+            },
+            {
+                text: '面试题专题',
+                items: [
+                    {text: 'MySQL', link: '/面试题/MySQL/README'},
+                    {text: 'Redis', link: '/面试题/Redis/README'},
+                    {text: 'Spring', link: '/面试题/Spring/README'},
+                    {text: 'RocketMQ', link: '/面试题/RocketMQ/README'},
+                    {text: 'Java基础', link: '/面试题/Java基础/README'},
+                    {text: '并发编程', link: '/面试题/并发编程/README'}
+                ]
+            },
+            {
                 text: '工具',
                 items: [
                     {text: 'APIFOX', link: '/工具/APIFOX/README'},
@@ -230,6 +260,39 @@ export default withMermaid(defineConfigWithTheme({
                     text: '📦 版本管理',
                     items: [
                         {text: 'VFOX', link: '/工具/VFOX/README'}
+                    ]
+                }
+            ],
+            '/面试题/': [
+                {
+                    text: '🎯 面试题专题',
+                    items: [
+                        {text: 'MySQL', link: '/面试题/MySQL/README'},
+                        {text: 'Redis', link: '/面试题/Redis/README'},
+                        {text: 'Spring', link: '/面试题/Spring/README'},
+                        {text: 'RocketMQ', link: '/面试题/RocketMQ/README'},
+                        {text: 'Java基础', link: '/面试题/Java基础/README'},
+                        {text: '并发编程', link: '/面试题/并发编程/README'}
+                    ]
+                }
+            ],
+            '/面试题/MySQL/': [
+                {
+                    text: '🗄️ MySQL 专题',
+                    items: [
+                        {text: 'MySQL 基础篇', link: '/面试题/MySQL/MySQL基础篇'},
+                        {text: 'MySQL 架构篇', link: '/面试题/MySQL/MySQL架构篇'},
+                        {text: 'MySQL 索引与调优篇', link: '/面试题/MySQL/MySQL索引和调优篇'},
+                        {text: 'MySQL 日志与备份篇', link: '/面试题/MySQL/MySQL日志与备份篇'},
+                        {text: 'MySQL 事务篇', link: '/面试题/MySQL/MySQL事务篇'}
+                    ]
+                }
+            ],
+            '/面试题/Redis/': [
+                {
+                    text: '🔴 Redis 专题',
+                    items: [
+                        {text: 'Redis', link: '/面试题/Redis/README'}
                     ]
                 }
             ],
