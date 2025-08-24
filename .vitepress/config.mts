@@ -75,6 +75,12 @@ export default withMermaid(defineConfigWithTheme({
                             {text: 'Spring事务传播行为', link: '/后端/SpringBoot/Spring事务传播行为'}
                         ]
                     },
+                    {
+                        text: '🎯 设计模式',
+                        items: [
+                            {text: 'Java 设计模式', link: '/后端/设计模式/README'}
+                        ]
+                    },
                     {text: 'SpringCloud', link: '/后端/SpringCloud/README'},
                     {text: '中间件', link: '/后端/中间件/RocketMQ/README'}
                 ]
@@ -174,10 +180,16 @@ export default withMermaid(defineConfigWithTheme({
                         {text: '函数式接口', link: '/后端/Java基础知识/函数式接口/函数式接口'}
                     ]
                 },
-                {
+                                                    {
                     text: '🍃 SpringBoot',
                     items: [
                         {text: 'Spring事务传播行为', link: '/后端/SpringBoot/Spring事务传播行为'}
+                    ]
+                },
+                {
+                    text: '🎯 设计模式',
+                    items: [
+                        {text: 'Java 设计模式', link: '/后端/设计模式/README'}
                     ]
                 },
                 {
