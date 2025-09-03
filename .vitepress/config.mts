@@ -43,7 +43,8 @@ export default withMermaid(defineConfigWithTheme({
                         text: '☕ 后端项目',
                         items: [
                             {text: 'Winter Encrypt', link: '/开源项目/Java/winter-encrypt'},
-                            {text: 'Winter Log', link: '/开源项目/Java/winter-log'}
+                            {text: 'Winter Log', link: '/开源项目/Java/winter-log'},
+                            {text: 'Winter Minio', link: '/开源项目/Java/winter-minio'},
                         ]
                     },
                     {
@@ -156,7 +157,8 @@ export default withMermaid(defineConfigWithTheme({
                     text: '☕ 后端项目',
                     items: [
                         {text: 'Winter Encrypt', link: '/开源项目/Java/winter-encrypt'},
-                        {text: 'Winter Log', link: '/开源项目/Java/winter-log'}
+                        {text: 'Winter Log', link: '/开源项目/Java/winter-log'},
+                        {text: 'Winter Minio', link: '/开源项目/Java/winter-minio'},
                     ]
                 },
                 {
