@@ -8,6 +8,8 @@
 
 | 项目名称 | 描述 | 技术栈 | 状态 |
 |---------|------|--------|------|
+| [AWS S3 分片上传](/开源项目/Java/aws-s3-upload) | 企业级文件上传解决方案，支持分片上传、断点续传、秒传 | Spring Boot, Vue 3, AWS S3, MySQL | 🟢 稳定版 |
+| [Winter MinIO Starter](/开源项目/Java/winter-minio) | 企业级 S3 兼容对象存储 Spring Boot Starter | Java, Spring Boot, AWS S3 SDK | 🟢 稳定版 |
 | [Winter Encrypt](/开源项目/Java/winter-encrypt) | 轻量级加密工具库 | Java, Spring Boot | 🟢 稳定版 |
 | [Winter Log](/开源项目/Java/winter-log) | 高性能日志框架 | Java, Log4j2 | 🟢 稳定版 |
 
@@ -78,4 +80,4 @@
 
 ---
 
-> 💡 **提示**：如果这些项目对您有帮助，请给个 ⭐ Star 支持一下！您的支持是我们持续改进的动力。 
+> 💡 **提示**：如果这些项目对您有帮助，请给个 ⭐ Star 支持一下！您的支持是我们持续改进的动力。

@@ -16,6 +16,10 @@ hero:
       link: /开源项目/Java/winter-encrypt
 
 features:
+  - title: 🚀 AWS S3 分片上传系统
+    details: 基于 Spring Boot + Vue 3 的企业级文件上传解决方案，采用分片上传、断点续传、秒传等先进技术，支持大文件高效传输
+  - title: 🌨️ Winter MinIO
+    details: 企业级 S3 兼容对象存储 Spring Boot Starter，基于 AWS S3 SDK 构建，完美兼容 MinIO、阿里云 OSS、腾讯云 COS 等存储服务
   - title: 🔐 Winter Encrypt
     details: Spring Boot 加解密工具包，支持 AES/DES/RSA 算法，注解式加解密，集合类型全覆盖，生产环境验证
   - title: 📝 Winter Log
@@ -24,15 +28,5 @@ features:
     details: 现代化命令行脚手架工具，基于 Node.js 和 TypeScript 构建，支持项目模板生成、代码规范检查和自动化部署
   - title: 🐳 Shortcut-Script
     details: CentOS 7 自动化部署脚本，一键安装 Docker、MySQL、Redis、Nginx 等常用服务，支持离线部署
-  - title: 🚀 高性能
-    details: 基于最新的技术栈和最佳实践，提供卓越的性能表现和用户体验，经过生产环境验证
-  - title: 🛠️ 易用性
-    details: 简洁的 API 设计，详细的文档说明，快速上手，大幅降低学习成本和使用门槛
-  - title: 🔧 可扩展
-    details: 模块化架构设计，支持插件系统，满足各种定制需求，易于维护和扩展
-  - title: 📚 完善文档
-    details: 详细的文档、示例代码和最佳实践，帮助开发者快速掌握使用方法，提高开发效率
-  - title: 🌟 开源免费
-    details: 完全开源，采用 Apache 2.0 协议，欢迎贡献代码和提出建议，共同打造更好的工具生态
 ---
 

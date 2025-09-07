@@ -1,274 +1,356 @@
-# 🌨️  winter-minio-spring-boot-starter
+---
+title: Winter MinIO Spring Boot Starter
+description: 企业级 S3 兼容对象存储 Spring Boot Starter，基于 AWS S3 SDK 构建
+layout: doc
+---
+
+# 🌨️ Winter MinIO Spring Boot Starter
 
 <div class="badge-container" align="center">
 
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Java support](https://img.shields.io/badge/Java-1.8+-green.svg)](https://openjdk.java.net/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg)](https://spring.io/projects/spring-boot)
-![aws-java-sdk-s3](https://img.shields.io/badge/AWSS3-1.12.780-005571)
-[![GitHub stars](https://img.shields.io/github/stars/hahaha-zsq/winter-encrypt-spring-boot-starter.svg?style=social&label=Stars)](https://github.com/hahaha-zsq/winter-minio-spring-boot-starter)
+[![AWS SDK S3](https://img.shields.io/badge/AWS%20SDK%20S3-1.12.709-FF9900.svg)](https://aws.amazon.com/sdk-for-java/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.hahaha-zsq/winter-minio-spring-boot-starter.svg)](https://search.maven.org/artifact/io.github.hahaha-zsq/winter-minio-spring-boot-starter)
+[![GitHub stars](https://img.shields.io/github/stars/hahaha-zsq/winter-minio-spring-boot-starter.svg?style=social&label=Stars)](https://github.com/hahaha-zsq/winter-minio-spring-boot-starter)
 
 </div>
 
->  ✨ 基于 AWS S3 SDK 的 Spring Boot Starter，提供开箱即用的 `AmazonS3Template` 工具类：封装了存储桶管理、对象上传/下载、预签名 URL、分片上传、元数据、生命周期、版本控制、通知等常见能力。
+::: info 项目简介
+**企业级 S3 兼容对象存储 Spring Boot Starter**
+
+基于 AWS S3 SDK 构建，完美兼容 MinIO、阿里云 OSS、腾讯云 COS 等 S3 协议存储服务
+:::
+
+::: tip 演示视频
+📺 **项目演示视频**: [aws-s3分片、断点，秒传](https://www.bilibili.com/video/BV1qkY3zFEzt/?share_source=copy_web&vd_source=c447f1819318b0fe977ae468afb3faf6)
+:::
 
 ---
 
-### 🔥 特性
-- ✅ 简单易用：`AmazonS3Template` API 设计直观，默认值友好
-- 🚀 上传增强：安全上传 InputStream，避免内存缓存风险；支持分片上传
-- 🔐 临时访问：便捷生成预签名 URL（GET/PUT），可设置过期时间与 Content-Type
-- 🧩 对象操作：复制、重命名、删除、批量删除、获取元数据、获取大小/最后修改时间
-- 🗂️ 桶管理：创建/删除/策略设置、生命周期、版本控制、通知配置
-- 🌐 访问优化：支持自定义域名或 Path/VHost 风格 Endpoint 的网关访问 URL 生成
+## 🚀 项目简介
 
----
+Winter MinIO Spring Boot Starter 是一个企业级的 S3 兼容对象存储解决方案，提供开箱即用的 `AmazonS3Template` 工具类，封装了存储桶管理、对象上传/下载、预签名 URL、分片上传、断点续传、进度监控、元数据管理等企业级功能。
 
-## 1️⃣ 安装与引入
+### 🎯 为什么选择 Winter MinIO Starter？
 
-### 编译打包
-```bash
-mvn clean install
-```
+::: tip 核心优势
+- **🔧 开箱即用** - 零配置启动，自动装配 S3 客户端和模板类
+- **🌐 广泛兼容** - 支持 MinIO、AWS S3、阿里云 OSS、腾讯云 COS 等 S3 协议存储
+- **⚡ 性能优化** - 内置连接池、超时配置、重试机制，支持大文件分块上传
+- **🔒 安全可靠** - 预签名 URL、访问策略管理、SSL/TLS 支持
+- **📊 功能完整** - 涵盖存储桶管理、对象操作、元数据、生命周期、版本控制等全场景
+:::
 
-### 在你的项目中引入（Maven）
+## ✨ 功能特性
+
+### 核心功能
+
+| 功能模块 | 描述 | 支持状态 |
+|---------|------|----------|
+| 🗂️ **存储桶管理** | 创建、删除、检查存在性、列举所有桶 | ✅ |
+| 📄 **对象操作** | 上传、下载、删除、复制、移动、重命名 | ✅ |
+| 🔗 **预签名 URL** | 生成临时访问链接，支持 GET/PUT 操作 | ✅ |
+| 🧩 **分片上传** | 大文件自动分片，支持并发和断点续传 | ✅ |
+| 🏷️ **元数据管理** | 完整的对象元数据设置和获取 | ✅ |
+| 🔄 **批量操作** | 批量删除、复制、移动对象 | ✅ |
+| 🛡️ **访问策略** | 内置只读、只写、读写策略，支持自定义 | ✅ |
+| 📋 **生命周期** | 自动化对象存储策略配置 | ✅ |
+| 🔢 **版本控制** | 启用/禁用对象版本管理 | ✅ |
+
+### 企业级特性
+
+::: tip 高级功能
+- **智能分片上传** - 自动处理大文件分片，支持并发上传和断点续传
+- **实时进度监控** - 上传/下载进度实时回调，支持进度条显示
+- **批量操作支持** - 批量删除、复制、移动对象操作
+- **元数据管理** - 完整的对象元数据设置和获取能力
+- **生命周期管理** - 自动化对象存储策略配置
+- **安全访问控制** - 预签名 URL、访问策略、SSL/TLS 支持
+:::
+
+## 📦 快速开始
+
+### 1. 添加依赖
+
+**Maven**
 ```xml
 <dependency>
-  <groupId>io.github.hahaha-zsq</groupId>
-  <artifactId>winter-minio-spring-boot-starter</artifactId>
-  <version>xxx</version>
+    <groupId>io.github.hahaha-zsq</groupId>
+    <artifactId>winter-minio-spring-boot-starter</artifactId>
+    <version>xxx</version>
 </dependency>
 ```
 
----
-
-## 2️⃣ 配置
-在 Spring Boot 配置文件（推荐 `application.yml`）中添加：
-```yaml
-winter-aws:
-  access-key: your-access-key
-  secret-key: your-secret-key
-  endpoint: http://your-minio-or-s3-endpoint:9000
-  bucket: your-default-bucket
-  path-style-access: true   # MinIO 通常为 true；原生 S3 通常为 false
-  region: ap-east-1
-  custom-domain: https://cdn.example.com   # 可选：自定义访问域名（用于网关 URL）
+**Gradle**
+```gradle
+implementation 'io.github.hahaha-zsq:winter-minio-spring-boot-starter:xxx'
 ```
 
----
+### 2. 配置文件
 
-## 3️⃣ 快速开始
+**application.yml**
+```yaml
+winter-aws:
+  # 必填配置
+  access-key: minioadmin              # 访问密钥
+  secret-key: minioadmin              # 秘密密钥
+  endpoint: http://localhost:9000     # 服务端点
+  bucket: default-bucket              # 默认存储桶
+  
+  # 可选配置
+  region: us-east-1                   # 区域设置
+  path-style-access: true             # 路径风格访问（MinIO推荐true）
+  custom-domain: https://cdn.example.com  # 自定义域名
+  enabled: true                       # 是否启用（默认true）
+```
 
-### 注入与基础使用
+**application.properties**
+```properties
+# 必填配置
+winter-aws.access-key=minioadmin
+winter-aws.secret-key=minioadmin
+winter-aws.endpoint=http://localhost:9000
+winter-aws.bucket=default-bucket
+
+# 可选配置
+winter-aws.region=us-east-1
+winter-aws.path-style-access=true
+winter-aws.custom-domain=https://cdn.example.com
+winter-aws.enabled=true
+```
+
+### 3. 基本使用
+
 ```java
 @RestController
 @RequiredArgsConstructor
-public class DemoController {
-    private final AmazonS3Template amazonS3Template;
-
+public class FileController {
+    
+    private final AmazonS3Template s3Template;
+    
+    /**
+     * 文件上传
+     */
     @PostMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file) throws IOException {
-        String key = "2024-05-20/img/" + UUID.randomUUID() + getSuffix(file.getOriginalFilename());
-        amazonS3Template.putObject(key, file, null);
-        return amazonS3Template.getGatewayUrl(key);
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            String objectKey = "uploads/" + System.currentTimeMillis() + "/" + file.getOriginalFilename();
+            s3Template.putObject(objectKey, file, null);
+            String fileUrl = s3Template.getGatewayUrl(objectKey);
+            return ResponseEntity.ok(fileUrl);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("上传失败: " + e.getMessage());
+        }
     }
-
-    private static String getSuffix(String filename) {
-        int i = filename.lastIndexOf('.');
-        return i >= 0 ? filename.substring(i) : "";
+    
+    /**
+     * 生成下载链接
+     */
+    @GetMapping("/download/{objectKey}")
+    public ResponseEntity<String> getDownloadUrl(@PathVariable String objectKey) {
+        // 生成15分钟有效期的下载链接
+        String downloadUrl = s3Template.getObjectUrl(objectKey, 15);
+        return ResponseEntity.ok(downloadUrl);
+    }
+    
+    /**
+     * 检查文件是否存在
+     */
+    @GetMapping("/exists/{objectKey}")
+    public ResponseEntity<Boolean> checkFileExists(@PathVariable String objectKey) {
+        boolean exists = s3Template.objectExists(objectKey);
+        return ResponseEntity.ok(exists);
     }
 }
 ```
+::: info 配置说明
+⚙️ **完整配置参数**
+:::
 
-### 生成预签名 URL（下载 GET）
-```java
-String url = amazonS3Template.getObjectUrl("your/object/key.jpg", 15); // 15 分钟
+### 配置参数详情
+
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `access-key` | String | ✅ | - | S3 访问密钥 ID |
+| `secret-key` | String | ✅ | - | S3 秘密访问密钥 |
+| `endpoint` | String | ✅ | - | S3 服务端点 URL |
+| `bucket` | String | ✅ | - | 默认存储桶名称 |
+| `region` | String | ❌ | `ap-east-1` | AWS 区域代码 |
+| `path-style-access` | Boolean | ❌ | `true` | 是否使用路径风格访问。true 时使用 path-style 模式（如 http://endpoint/bucketname/object-key），适用于 nginx 反向代理和 S3 默认配置；false 时使用 virtual-hosted-style 模式（如 http://bucketname.endpoint/object-key），适用于阿里云等服务 |
+| `custom-domain` | String | ❌ | - | 自定义访问域名 |
+| `enabled` | Boolean | ❌ | `true` | 是否启用自动配置 |
+
+### 不同环境配置示例
+
+<details>
+<summary>点击展开环境配置示例</summary>
+
+**开发环境 (application-dev.yml)**
+```yaml
+winter-aws:
+  access-key: minioadmin
+  secret-key: minioadmin
+  endpoint: http://localhost:9000
+  bucket: dev-bucket
+  path-style-access: true
 ```
 
-### 生成预签名 URL（上传 PUT，指定 Content-Type）
-```java
-String url = amazonS3Template.getObjectUrl(
-    "your-bucket",
-    "your/object/key.jpg",
-    10,
-    TimeUnit.MINUTES,
-    org.springframework.http.MediaType.IMAGE_JPEG_VALUE
-);
+**生产环境 (application-prod.yml)**
+```yaml
+winter-aws:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  endpoint: https://s3.amazonaws.com
+  bucket: prod-bucket
+  region: us-east-1
+  path-style-access: false
+  custom-domain: https://cdn.yourdomain.com
+  max-connections: 100
+  connection-timeout: 60000
 ```
 
-### 安全上传 InputStream（务必提供准确 contentLength）
-```java
-try (InputStream in = file.getInputStream()) {
-    amazonS3Template.putObject(
-        "your-bucket",
-        "path/to/file.bin",
-        org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE,
-        in,
-        file.getSize(),   // 必须为准确的字节长度
-        5 * 1024 * 1024   // 可选：单请求最大读取，默认 5MB
-    );
-}
+</details>
+
+::: info API 文档
+📖 **核心 API 概览**
+:::
+
+### API 接口详情
+
+#### 🗂️ 存储桶管理
+
+| 方法 | 描述 | 返回值 |
+|------|------|--------|
+| `createBucket(String bucketName)` | 创建存储桶 | `Bucket` |
+| `deleteBucket(String bucketName)` | 删除存储桶 | `void` |
+| `bucketExists(String bucketName)` | 检查存储桶是否存在 | `boolean` |
+| `listBuckets()` | 列举所有存储桶 | `List<Bucket>` |
+| `setBucketPolicy(String bucketName, PolicyType policyType)` | 设置存储桶策略 | `void` |
+
+#### 📄 对象操作
+
+| 方法 | 描述 | 返回值 |
+|------|------|--------|
+| `putObject(String objectKey, MultipartFile file, Map<String, String> metadata)` | 上传文件 | `PutObjectResult` |
+| `getObject(String objectKey)` | 获取对象 | `S3Object` |
+| `downloadObject(String objectKey, File localFile)` | 下载文件到本地 | `void` |
+| `deleteObject(String objectKey)` | 删除对象 | `void` |
+| `deleteObjects(List<String> objectKeys)` | 批量删除对象 | `DeleteObjectsResult` |
+| `copyObject(String sourceKey, String destinationKey)` | 复制对象 | `CopyObjectResult` |
+| `objectExists(String objectKey)` | 检查对象是否存在 | `boolean` |
+
+#### 🔗 预签名 URL
+
+| 方法 | 描述 | 返回值 |
+|------|------|--------|
+| `getObjectUrl(String objectKey, int expires)` | 生成下载 URL | `String` |
+| `getPresignedObjectPutUrl(String objectKey, int expires, TimeUnit timeUnit, String contentType)` | 生成上传 URL | `String` |
+| `getGatewayUrl(String objectKey)` | 获取公共访问 URL | `String` |
+
+#### 🧩 分片上传
+
+| 方法 | 描述 | 返回值 |
+|------|------|--------|
+| `initiateMultipartUpload(String objectKey, String contentType)` | 初始化分片上传 | `InitiateMultipartUploadResult` |
+| `uploadPart(String uploadId, String objectKey, String bucketName, int partNumber, long partSize, InputStream inputStream)` | 上传分片 | `UploadPartResult` |
+| `completeMultipartUpload(String objectKey, String uploadId, List<PartSummary> parts)` | 完成分片上传 | `CompleteMultipartUploadResult` |
+| `abortMultipartUpload(String objectKey, String uploadId)` | 中止分片上传 | `void` |
+
+## ❓ 常见问题
+
+<details>
+<summary><strong>Q: 如何解决 "Connection refused" 错误？</strong></summary>
+
+**A**: 检查 MinIO 服务是否正常启动，确认 endpoint 配置正确。
+
+```bash
+# 检查 MinIO 服务状态
+docker ps | grep minio
+
+# 测试连接
+curl http://localhost:9000/minio/health/live
 ```
+</details>
 
-### 分片上传（大文件）
+<details>
+<summary><strong>Q: 上传大文件时内存占用过高？</strong></summary>
+
+**A**: 使用分片上传功能，避免一次性加载大文件到内存。
+
 ```java
-// 1) 初始化上传
-InitiateMultipartUploadResult init = amazonS3Template.initiateMultipartUpload(
-    "your-bucket", "big/xxx.zip", MediaType.APPLICATION_OCTET_STREAM_VALUE);
-String uploadId = init.getUploadId();
-
-// 2) 逐片上传，建议 5MB 或以上
-UploadPartResult part1 = amazonS3Template.uploadPart(
-    "your-bucket", uploadId, "big/xxx.zip", 1, filePart1);
-// ... 多片
-
-// 3) 合并分片
-amazonS3Template.completeMultipartUpload("your-bucket", "big/xxx.zip", uploadId);
-
-// 失败/取消
-// amazonS3Template.abortMultipartUpload("big/xxx.zip", uploadId);
+// 使用 InputStream 而不是 byte[]
+InputStream inputStream = new FileInputStream(largeFile);
+s3Template.putObject(objectKey, inputStream, file.length(), "application/octet-stream");
 ```
+</details>
+
+<details>
+<summary><strong>Q: 如何设置自定义域名？</strong></summary>
+
+**A**: 在配置中设置 `custom-domain` 参数，并确保 DNS 解析正确。
+
+```yaml
+winter-aws:
+  custom-domain: https://cdn.yourdomain.com
+  # 其他配置...
+```
+</details>
+
+<details>
+<summary><strong>Q: 支持哪些 S3 兼容服务？</strong></summary>
+
+**A**: 支持所有兼容 S3 API 的对象存储服务：
+- ✅ MinIO
+- ✅ AWS S3
+- ✅ 阿里云 OSS
+- ✅ 腾讯云 COS
+- ✅ 华为云 OBS
+- ✅ 七牛云 Kodo
+</details>
+
+::: info 贡献指南
+🤝 **欢迎贡献**
+
+我们欢迎所有形式的贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解如何参与项目开发。
+:::
+
+### 快速贡献
+
+::: tip 贡献步骤
+1. 🍴 Fork 本仓库
+2. 🔧 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 📝 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 📤 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 🔄 开启 Pull Request
+:::
+
+### 问题反馈
+
+::: details 反馈渠道
+- 🐛 [提交 Bug 报告](../../issues/new?template=bug_report.md)
+- 💡 [提交功能建议](../../issues/new?template=feature_request.md)
+- 📖 [文档改进建议](../../issues/new?template=documentation.md)
+:::
+
+## 📄 许可证
+
+本项目采用 [Apache License 2.0](LICENSE) 开源协议。
+
+::: info 致谢
+🙏 **感谢以下开源项目和贡献者**
+
+- [AWS SDK for Java](https://github.com/aws/aws-sdk-java) - 提供 S3 客户端支持
+- [Spring Boot](https://github.com/spring-projects/spring-boot) - 自动配置框架
+- [MinIO](https://github.com/minio/minio) - 高性能对象存储服务
+- 所有为这个项目做出贡献的开发者 ❤️
+:::
 
 ---
 
-## 4️⃣ 常见场景示例
+::: tip 支持项目
+**如果这个项目对您有帮助，请给我们一个 ⭐️**
 
-- 🪣 创建存储桶并设置策略
-```java
-amazonS3Template.createBucket("logs");
-amazonS3Template.setBucketPolicy("logs", com.zsq.winter.minio.enums.PolicyType.READ_ONLY);
-```
-
-- 📄 获取对象元数据、大小、最后修改时间
-```java
-ObjectMetadata md = amazonS3Template.getObjectMetadata("key");
-long size = amazonS3Template.getObjectSize("key");
-Date last = amazonS3Template.getObjectLastModified("key");
-```
-
-- 🔁 复制、重命名、删除、批量删除
-```java
-amazonS3Template.copyObject("old/key.jpg", "copy/key.jpg");
-amazonS3Template.renameObject("old/name.jpg", "new/name.jpg");
-amazonS3Template.removeObject("to/delete.jpg");
-amazonS3Template.deleteObjects(Arrays.asList("a.jpg","b.jpg"));
-```
-
-- ⏬ 下载到文件 / ⏯️ 范围读取
-```java
-amazonS3Template.downloadObject("key", new File("/tmp/file.bin"));
-InputStream range = amazonS3Template.getObjectInputStream("key", 0, 1024);
-```
-
-- 🌐 获取网关 URL（支持自定义域名或自动拼接 Endpoint）
-```java
-String publicUrl = amazonS3Template.getGatewayUrl("path/to/img.png");
-```
-
----
-
-## 5️⃣ API 速查（按类别）
-
-> 以下仅列常用方法，更多请查看 `AmazonS3Template` 源码。
-
-### 🪣 存储桶（Bucket）
-
-| 方法 | 说明 |
-|---|---|
-| `boolean existBucket(String bucketName)` | 判断桶是否存在 |
-| `boolean createBucket(String bucketName)` | 创建桶 |
-| `boolean createBucket(String bucketName, String policyText)` | 创建桶并设置自定义策略 |
-| `boolean createBucket(String bucketName, PolicyType policyType)` | 创建桶并设置内置策略（READ_ONLY/WRITE_ONLY/READ_WRITE） |
-| `void setBucketPolicy(String bucketName, String policyText)` | 设置桶策略（自定义策略文本） |
-| `void setBucketPolicy(String bucketName, PolicyType policyType)` | 设置桶策略（内置策略） |
-| `void removeBucket(String bucketName)` | 删除桶 |
-| `List<Bucket> getAllBuckets()` | 查询所有桶 |
-| `Optional<Bucket> getBucket(String bucketName)` | 查询指定桶 |
-| `void setBucketLifecycleConfiguration(String bucketName, BucketLifecycleConfiguration config)` | 设置生命周期配置 |
-| `BucketLifecycleConfiguration getBucketLifecycleConfiguration(String bucketName)` | 获取生命周期配置 |
-| `void enableBucketVersioning(String bucketName)` / `void disableBucketVersioning(String bucketName)` | 启用/禁用版本控制 |
-| `VersionListing listVersions(String bucketName, String prefix)` | 列出对象版本 |
-| `void setBucketNotificationConfiguration(String bucketName, BucketNotificationConfiguration config)` | 设置通知配置 |
-| `BucketNotificationConfiguration getBucketNotificationConfiguration(String bucketName)` | 获取通知配置 |
-
-### 📦 对象（Object）上传/下载
-
-| 方法 | 说明 |
-|---|---|
-| `PutObjectResult putObject(String bucket, String key, String mediaType, InputStream in, long contentLength, Integer size)` | 安全上传 InputStream（必须提供准确 contentLength） |
-| `PutObjectResult putObject(String key, MultipartFile file, Integer size)` | 上传文件（使用默认桶） |
-| `S3Object getObjectInfo(String bucket, String key)` | 获取对象信息 |
-| `void downloadObject(String bucket, String key, File file)` | 下载对象到文件 |
-| `void downloadObject(String key, File file)` | 下载对象到文件（默认桶） |
-| `InputStream getObjectInputStream(String bucket, String key)` | 获取对象输入流 |
-| `InputStream getObjectInputStream(String bucket, String key, long start, long end)` | 范围读取输入流 |
-
-### 🔐 预签名 URL（临时授权访问）
-
-| 方法 | 说明 |
-|---|---|
-| `String getPresignedObjectPutUrl(String bucket, String key, Integer time, TimeUnit unit)` | 生成 PUT 上传预签名 URL |
-| `String getObjectUrl(String bucket, String key)` | 获取对象直链（若对象公开或配合签名） |
-| `String getObjectUrl(String bucket, String key, Integer expireTime)` | 生成带过期的 GET 预签名 URL（默认分钟） |
-| `String getObjectUrl(String bucket, String key, Integer expireTime, TimeUnit unit)` | 生成带过期的 GET 预签名 URL |
-| `String getObjectUrl(String bucket, String key, Integer expireTime, TimeUnit unit, String contentType)` | 生成带过期且指定 Content-Type 的预签名 URL |
-| `GeneratePresignedUrlRequest generatePresignedUrlRequest(...)` | 自定义更多参数生成请求 |
-
-### 🧩 对象管理
-
-| 方法 | 说明 |
-|---|---|
-| `boolean doesObjectExist(String bucket, String key)` | 判断对象是否存在 |
-| `CopyObjectResult copyObject(String srcBucket, String srcKey, String dstBucket, String dstKey)` | 复制对象 |
-| `CopyObjectResult copyObject(String sourceKey, String destinationKey)` | 复制对象（默认桶） |
-| `void renameObject(String bucket, String oldKey, String newKey)` | 重命名（底层复制+删除） |
-| `void renameObject(String oldKey, String newKey)` | 重命名（默认桶） |
-| `void removeObject(String bucket, String key)` | 删除对象 |
-| `void removeObject(String key)` | 删除对象（默认桶） |
-| `DeleteObjectsResult removeObjects(String bucket, List<String> keys)` | 批量删除对象 |
-| `DeleteObjectsResult deleteObjects(List<String> keys)` | 批量删除对象（默认桶） |
-| `ObjectMetadata getObjectMetadata(String bucket, String key)` | 获取对象元数据 |
-| `void setObjectMetadata(String bucket, String key, ObjectMetadata metadata)` | 设置对象元数据 |
-| `long getObjectSize(String bucket, String key)` | 获取对象大小（字节） |
-| `Date getObjectLastModified(String bucket, String key)` | 获取对象最后修改时间 |
-
-### 🚚 分片上传（Multipart Upload）
-
-| 方法 | 说明 |
-|---|---|
-| `InitiateMultipartUploadResult initiateMultipartUpload(String bucket, String key, String contentType)` | 初始化分片上传（返回 uploadId） |
-| `UploadPartResult uploadPart(String bucket, String uploadId, String key, int partNumber, MultipartFile file)` | 上传分片（自动计算 MD5） |
-| `UploadPartResult uploadPart(String bucket, String uploadId, String key, String md5, Integer partNumber, long partSize, InputStream in)` | 上传分片（自传 md5Digest） |
-| `PartListing listParts(String bucket, String key, String uploadId)` | 列出已上传分片 |
-| `CompleteMultipartUploadResult completeMultipartUpload(String bucket, String key, String uploadId)` | 合并分片 |
-| `CompleteMultipartUploadResult completeMultipartUpload(String bucket, String key, String uploadId, List<PartSummary> parts)` | 合并分片（自传已上传分块信息） |
-| `void abortMultipartUpload(String bucket, String key, String uploadId)` | 中止分片上传 |
-| `MultipartUploadListing listMultipartUploads(String bucket, String prefix, String delimiter)` | 列出进行中的分片上传 |
-| `List<Map<String,Object>> getMultipartInfoArr(String bucket, String prefix, String delimiter)` | 获取分片上传详情（对象名、uploadId、存储级别、时间等） |
-
-### 🌐 访问 URL
-
-| 方法 | 说明 |
-|---|---|
-| `String getGatewayUrl(String bucket, String key)` | 返回可访问的网关 URL（优先使用 `custom-domain`） |
-| `String getGatewayUrl(String key)` | 返回可访问的网关 URL（默认桶） |
-
----
-
-## 6️⃣ 注意事项 & 最佳实践
-- ⚠️ 使用 `InputStream` 上传时，必须提供准确的 `contentLength`，不要依赖 `stream.available()`（否则 SDK 可能将流缓存到内存，导致内存飙升或失败）
-- ⏱️ 预签名 URL 请设置合理的过期时间，避免泄露风险
-- 🧹 分片上传若失败务必调用 `abortMultipartUpload` 清理，避免占用存储
-- 🪪 MinIO 通常需要开启 `path-style-access: true`；S3 一般为 `false`
-- 🌍 若使用自定义域名作为静态资源分发，推荐开启 CDN 并在对象上设置正确的 `Content-Type`
-
----
-
-## 7️⃣ 版本与兼容性
-- 基于 AWS S3 Java SDK（与 MinIO 自适配）
-- JDK 与 Spring Boot 版本依赖以实际 `pom.xml` 为准
-
----
-
-## 8️⃣ 许可
-本项目遵循 MIT License（若有变动以仓库 License 文件为准）。
+[⬆ 回到顶部](#-winter-minio-spring-boot-starter)
+:::
