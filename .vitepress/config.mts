@@ -108,7 +108,8 @@ export default withMermaid(defineConfigWithTheme({
                 text: '运维技术',
                 items: [
                     {text: 'Docker', link: '/容器/Docker/README'},
-                    {text: 'Nginx', link: '/代理/Nginx/README'},
+                    {text: 'Nginx', link: '/运维/Nginx/README'},
+                    {text: 'Bash', link: '/运维/Bash/Bash'},
                     {text: '数据库', link: '/数据库/MySQL/README'}
                 ]
             },

@@ -38,6 +38,11 @@ const playlist = [
     file: '/open-source/music/AI-Nobody.mp3', // 包含base路径的完整路径
   },
   {
+    name: 'home in my heart',
+    author: 'nathan rivers',
+    file: '/open-source/music/nathan rivers-home in my heart.mp3', // 包含base路径的完整路径
+  },
+  {
     name: '泪桥',
     author: 'AI',
     file: '/open-source/music/AI-泪桥.mp3', // 包含base路径的完整路径
