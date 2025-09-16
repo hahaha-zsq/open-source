@@ -2482,6 +2482,1008 @@ main "$@"
 
 ---
 
+## 📊 系统监控与进程管理 <Badge type="warning" text="核心技能" />
+
+::: warning ⚡ 重要提醒
+系统监控和进程管理是 Linux 运维的核心技能，直接关系到系统性能和稳定性。
+掌握进程查询、性能监控和文本处理工具是每个运维工程师的必备技能。
+:::
+
+现代 Linux 系统运维需要实时监控系统状态、快速定位性能瓶颈和高效处理日志数据。本章将全面介绍进程管理、性能监控和文本处理的专业技巧。
+
+### 🔍 进程查询与管理
+
+#### ⭐ ps 命令详解（进程快照）
+
+**ps** 命令用于显示当前系统中运行进程的快照信息，是进程管理的基础工具。
+
+::: tip 为什么掌握 ps 命令？
+- 🔍 **快速诊断**：瞬间了解系统进程状态
+- 📊 **资源分析**：查看进程资源占用情况
+- 🎯 **精确定位**：通过多种条件筛选目标进程
+- 🔧 **脚本集成**：易于集成到自动化脚本中
+:::
+
+##### 📋 ps 命令基础用法 <Badge type="info" text="必备" />
+
+::: code-group
+
+```bash [基础查询]
+# 🔍 基本进程查询
+ps                          # 显示当前终端的进程
+ps -e                       # 显示所有进程
+ps -f                       # 显示完整格式信息
+ps -ef                      # 显示所有进程的完整信息
+
+# 👤 按用户查询
+ps -u username              # 显示指定用户的进程
+ps -U username              # 显示指定用户拥有的所有进程
+ps -u $(whoami)             # 显示当前用户的进程
+```
+
+```bash [高级查询]
+# 📊 自定义输出格式
+ps -eo pid,ppid,cmd,pcpu,pmem,time    # 自定义显示列
+ps -eo pid,cmd --sort=-pcpu           # 按CPU使用率排序
+ps -eo pid,cmd --sort=-pmem           # 按内存使用率排序
+
+# 🎯 进程树显示
+ps -ejH                     # 显示进程树（层次结构）
+ps -eLf                     # 显示线程信息
+ps axjf                     # 显示完整进程树
+```
+
+```bash [实用查询技巧]
+# 🔍 查找特定进程
+ps -ef | grep nginx         # 查找nginx相关进程
+ps -C nginx                 # 直接按命令名查找
+ps -p 1234                  # 按进程ID查找
+
+# 📈 性能监控
+ps -eo pid,pcpu,pmem,cmd --sort=-pcpu | head -10  # CPU占用前10
+ps -eo pid,pcpu,pmem,cmd --sort=-pmem | head -10  # 内存占用前10
+ps -eo pid,etime,cmd        # 显示进程运行时间
+```
+
+:::
+
+##### 🎯 ps 输出格式详解 <Badge type="info" text="参考" />
+
+::: details 📊 常用输出字段说明
+
+| 字段名 | 说明 | 示例值 | 用途 |
+|--------|------|--------|------|
+| `PID` | 进程ID | `1234` | 进程唯一标识 |
+| `PPID` | 父进程ID | `1` | 进程关系分析 |
+| `USER` | 进程所有者 | `root` | 权限分析 |
+| `%CPU` | CPU使用率 | `15.2` | 性能监控 |
+| `%MEM` | 内存使用率 | `2.1` | 内存分析 |
+| `VSZ` | 虚拟内存大小(KB) | `123456` | 内存占用 |
+| `RSS` | 物理内存大小(KB) | `12345` | 实际内存使用 |
+| `TTY` | 终端类型 | `pts/0` | 会话管理 |
+| `STAT` | 进程状态 | `S` | 状态监控 |
+| `START` | 启动时间 | `10:30` | 运行时长分析 |
+| `TIME` | CPU时间 | `00:01:23` | CPU使用统计 |
+| `COMMAND` | 命令行 | `/usr/bin/nginx` | 进程识别 |
+
+:::
+
+::: details 🔍 进程状态码详解
+
+| 状态码 | 含义 | 说明 | 处理建议 |
+|--------|------|------|----------|
+| `R` | Running | 正在运行或可运行 | 正常状态 |
+| `S` | Sleeping | 可中断睡眠 | 正常状态 |
+| `D` | Uninterruptible | 不可中断睡眠 | 可能IO阻塞 |
+| `T` | Stopped | 已停止 | 检查是否需要恢复 |
+| `Z` | Zombie | 僵尸进程 | 需要清理 |
+| `<` | High Priority | 高优先级 | 关注资源使用 |
+| `N` | Low Priority | 低优先级 | 正常状态 |
+| `L` | Locked | 内存锁定 | 关注内存使用 |
+| `s` | Session Leader | 会话领导者 | 进程组管理 |
+| `+` | Foreground | 前台进程组 | 终端管理 |
+
+:::
+
+##### 🛠️ ps 实战脚本 <Badge type="tip" text="实战" />
+
+::: code-group
+
+```bash [进程监控脚本]
+#!/bin/bash
+# 📊 系统进程监控脚本
+
+# 🎨 颜色定义
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# 📋 显示系统进程概况
+show_process_summary() {
+    echo -e "${GREEN}📊 系统进程概况${NC}"
+    echo "----------------------------------------"
+    
+    local total_processes=$(ps -e | wc -l)
+    local running_processes=$(ps -eo stat | grep -c '^R')
+    local sleeping_processes=$(ps -eo stat | grep -c '^S')
+    local zombie_processes=$(ps -eo stat | grep -c '^Z')
+    
+    echo -e "总进程数: ${BLUE}$((total_processes - 1))${NC}"
+    echo -e "运行中: ${GREEN}${running_processes}${NC}"
+    echo -e "睡眠中: ${YELLOW}${sleeping_processes}${NC}"
+    echo -e "僵尸进程: ${RED}${zombie_processes}${NC}"
+    echo
+}
+
+# 🔥 显示CPU占用最高的进程
+show_top_cpu() {
+    echo -e "${RED}🔥 CPU占用最高的进程 (前10名)${NC}"
+    echo "----------------------------------------"
+    ps -eo pid,pcpu,pmem,user,cmd --sort=-pcpu | head -11
+    echo
+}
+
+# 💾 显示内存占用最高的进程
+show_top_memory() {
+    echo -e "${BLUE}💾 内存占用最高的进程 (前10名)${NC}"
+    echo "----------------------------------------"
+    ps -eo pid,pcpu,pmem,user,cmd --sort=-pmem | head -11
+    echo
+}
+
+# 🧟 检查僵尸进程
+check_zombie_processes() {
+    echo -e "${YELLOW}🧟 僵尸进程检查${NC}"
+    echo "----------------------------------------"
+    
+    local zombies=$(ps -eo pid,ppid,stat,cmd | grep '^[[:space:]]*[0-9]*[[:space:]]*[0-9]*[[:space:]]*Z')
+    
+    if [[ -n "$zombies" ]]; then
+        echo -e "${RED}⚠️ 发现僵尸进程:${NC}"
+        echo "$zombies"
+        echo
+        echo -e "${YELLOW}💡 清理建议: 重启父进程或系统重启${NC}"
+    else
+        echo -e "${GREEN}✅ 未发现僵尸进程${NC}"
+    fi
+    echo
+}
+
+# 🚀 主函数
+main() {
+    echo -e "${GREEN}🔍 开始进程监控分析...${NC}"
+    echo "生成时间: $(date '+%Y-%m-%d %H:%M:%S')"
+    echo
+    
+    show_process_summary
+    show_top_cpu
+    show_top_memory
+    check_zombie_processes
+    
+    echo -e "${GREEN}✅ 监控分析完成！${NC}"
+}
+
+# 执行主函数
+main "$@"
+```
+
+```bash [进程查找脚本]
+#!/bin/bash
+# 🔍 智能进程查找脚本
+
+search_process() {
+    local search_term="$1"
+    local search_type="${2:-name}"
+    
+    if [[ -z "$search_term" ]]; then
+        echo -e "${RED}❌ 请提供搜索关键词${NC}"
+        return 1
+    fi
+    
+    echo -e "${GREEN}🔍 搜索进程: $search_term${NC}"
+    echo "----------------------------------------"
+    
+    case "$search_type" in
+        "name")
+            # 按进程名搜索
+            ps -eo pid,ppid,pcpu,pmem,user,cmd | grep -i "$search_term" | grep -v grep
+            ;;
+        "user")
+            # 按用户搜索
+            ps -u "$search_term" -o pid,pcpu,pmem,cmd
+            ;;
+        "port")
+            # 按端口搜索
+            echo -e "${BLUE}🌐 监听端口 $search_term 的进程:${NC}"
+            lsof -i ":$search_term" 2>/dev/null || netstat -tlnp | grep ":$search_term"
+            ;;
+        "cpu")
+            # 按CPU使用率搜索
+            echo -e "${RED}🔥 CPU使用率超过 $search_term% 的进程:${NC}"
+            ps -eo pid,pcpu,pmem,user,cmd --sort=-pcpu | awk -v threshold="$search_term" 'NR==1 || $2 > threshold'
+            ;;
+        *)
+            echo -e "${RED}❌ 不支持的搜索类型: $search_type${NC}"
+            echo "支持的类型: name, user, port, cpu"
+            return 1
+            ;;
+    esac
+}
+
+# 使用示例
+echo -e "${YELLOW}📋 使用示例:${NC}"
+echo "  $0 nginx name      # 按名称搜索"
+echo "  $0 root user       # 按用户搜索"
+echo "  $0 80 port         # 按端口搜索"
+echo "  $0 10 cpu          # 搜索CPU>10%的进程"
+echo
+
+# 执行搜索
+search_process "$@"
+```
+
+:::
+
+#### ⚡ top/htop 命令详解（实时监控）
+
+**top** 和 **htop** 是实时系统监控工具，提供动态的系统和进程信息。
+
+##### 🎯 top 命令使用技巧 <Badge type="warning" text="实时监控" />
+
+::: code-group
+
+```bash [基础使用]
+# 🔍 基本监控
+top                         # 启动top监控
+top -d 2                    # 每2秒刷新一次
+top -n 5                    # 只显示5次后退出
+top -b                      # 批处理模式（适合脚本）
+
+# 👤 按用户监控
+top -u username             # 只显示指定用户的进程
+top -U username             # 显示指定用户拥有的进程
+
+# 🎯 按进程监控
+top -p 1234                 # 监控指定PID
+top -p 1234,5678            # 监控多个PID
+```
+
+```bash [交互式操作]
+# 在top运行时的快捷键操作：
+
+# 📊 排序操作
+# P - 按CPU使用率排序
+# M - 按内存使用率排序
+# T - 按运行时间排序
+# N - 按PID排序
+
+# 🔍 过滤操作
+# u - 按用户过滤
+# k - 终止进程
+# r - 修改进程优先级
+# f - 选择显示字段
+
+# 🎨 显示控制
+# 1 - 显示所有CPU核心
+# t - 切换CPU信息显示
+# m - 切换内存信息显示
+# c - 显示完整命令行
+```
+
+```bash [高级用法]
+# 📊 自定义输出
+top -b -n1 | head -20       # 获取一次快照
+top -b -n1 -o %CPU          # 按CPU排序输出
+top -b -n1 -o %MEM          # 按内存排序输出
+
+# 📄 保存到文件
+top -b -n1 > system_snapshot.txt
+top -b -d 5 -n 12 > 1hour_monitor.txt  # 监控1小时
+
+# 🔍 监控特定进程
+top -b -n1 -p $(pgrep nginx) # 监控nginx进程
+```
+
+:::
+
+##### 🎨 htop 增强功能 <Badge type="tip" text="推荐工具" />
+
+::: info 📚 htop 优势
+- 🎨 **彩色界面**：更直观的视觉效果
+- 🖱️ **鼠标支持**：可以用鼠标操作
+- 🔍 **搜索功能**：快速查找进程
+- 🌳 **进程树**：清晰的进程关系显示
+- ⚙️ **配置灵活**：可自定义显示内容
+:::
+
+::: code-group
+
+```bash [安装htop]
+# 📦 不同系统的安装方法
+# CentOS/RHEL
+sudo yum install htop
+sudo dnf install htop
+
+# Ubuntu/Debian
+sudo apt update && sudo apt install htop
+
+# macOS
+brew install htop
+```
+
+```bash [htop使用技巧]
+# 🚀 启动htop
+htop                        # 基本启动
+htop -d 10                  # 1秒刷新间隔
+htop -u username            # 只显示指定用户进程
+htop -p 1234,5678           # 监控指定进程
+
+# 🎯 htop快捷键（运行时）
+# F1 - 帮助
+# F2 - 设置
+# F3 - 搜索进程
+# F4 - 过滤进程
+# F5 - 进程树视图
+# F6 - 排序选择
+# F9 - 终止进程
+# F10 - 退出
+```
+
+:::
+
+### 🔥 高CPU使用率监控与排查
+
+#### 📊 CPU监控策略 <Badge type="danger" text="性能关键" />
+
+::: danger ⚠️ 高CPU使用率的危害
+- 🐌 **系统响应慢**：用户体验严重下降
+- 🔥 **硬件过热**：可能导致硬件损坏
+- ⚡ **电力消耗**：增加运营成本
+- 💥 **系统崩溃**：极端情况下系统不可用
+:::
+
+##### 🎯 CPU监控命令集合 <Badge type="warning" text="核心工具" />
+
+::: code-group
+
+```bash [实时CPU监控]
+# 📊 系统整体CPU使用率
+top -b -n1 | grep "Cpu(s)"   # 获取CPU使用率快照
+vmstat 1 5                   # 每秒显示系统统计，共5次
+iostat -c 1 5                # 每秒显示CPU统计，共5次
+sar -u 1 5                   # 每秒显示CPU利用率，共5次
+
+# 🔍 按进程查看CPU使用
+ps -eo pid,pcpu,cmd --sort=-pcpu | head -20
+top -b -n1 -o %CPU | head -20
+htop --sort-key PERCENT_CPU
+```
+
+```bash [历史CPU数据分析]
+# 📈 查看历史CPU使用情况
+sar -u                       # 显示今天的CPU使用率
+sar -u -f /var/log/sa/sa01   # 查看指定日期的数据
+sar -u -s 09:00 -e 18:00     # 查看指定时间段数据
+
+# 📊 CPU使用率统计
+sar -u 1 60 | awk 'NR>3 {sum+=$3; count++} END {print "平均CPU使用率:", sum/count "%"}'
+```
+
+```bash [多核CPU监控]
+# 🔢 查看每个CPU核心使用率
+top -1                       # top中按1显示所有核心
+htop                         # htop默认显示所有核心
+mpstat -P ALL 1 5            # 显示所有CPU核心统计
+sar -P ALL -u 1 5            # 显示所有CPU核心利用率
+
+# 📊 CPU核心负载均衡检查
+mpstat -P ALL 1 10 | awk '/Average/ && !/CPU/ {print $2, $3}'
+```
+
+:::
+
+##### 🔍 高CPU进程排查流程 <Badge type="tip" text="排查方法" />
+
+::: code-group
+
+```bash [第一步：识别高CPU进程]
+#!/bin/bash
+# 🔍 高CPU进程识别脚本
+
+# 设置CPU使用率阈值
+CPU_THRESHOLD=80
+
+echo -e "${RED}🔥 CPU使用率超过 ${CPU_THRESHOLD}% 的进程:${NC}"
+echo "----------------------------------------"
+
+# 查找高CPU进程
+ps -eo pid,pcpu,pmem,user,cmd --sort=-pcpu | awk -v threshold="$CPU_THRESHOLD" '
+NR==1 {print $0}
+NR>1 && $2 > threshold {
+    printf "PID: %-8s CPU: %-6s%% MEM: %-6s%% USER: %-10s CMD: %s\n", $1, $2, $3, $4, $5
+}'
+
+# 获取系统负载
+echo
+echo -e "${YELLOW}📊 系统负载信息:${NC}"
+uptime
+echo
+
+# 获取CPU核心数
+cpu_cores=$(nproc)
+echo -e "${BLUE}💻 CPU核心数: ${cpu_cores}${NC}"
+
+# 计算负载建议
+load_1min=$(uptime | awk '{print $(NF-2)}' | sed 's/,//')
+if (( $(echo "$load_1min > $cpu_cores" | bc -l) )); then
+    echo -e "${RED}⚠️ 系统负载过高！当前负载: $load_1min, CPU核心: $cpu_cores${NC}"
+else
+    echo -e "${GREEN}✅ 系统负载正常。当前负载: $load_1min, CPU核心: $cpu_cores${NC}"
+fi
+```
+
+```bash [第二步：详细进程分析]
+#!/bin/bash
+# 📊 进程详细分析脚本
+
+analyze_process() {
+    local pid="$1"
+    
+    if [[ -z "$pid" ]]; then
+        echo -e "${RED}❌ 请提供进程PID${NC}"
+        return 1
+    fi
+    
+    if ! kill -0 "$pid" 2>/dev/null; then
+        echo -e "${RED}❌ 进程 $pid 不存在${NC}"
+        return 1
+    fi
+    
+    echo -e "${GREEN}🔍 分析进程 PID: $pid${NC}"
+    echo "========================================"
+    
+    # 基本进程信息
+    echo -e "${BLUE}📋 基本信息:${NC}"
+    ps -p "$pid" -o pid,ppid,user,pcpu,pmem,etime,cmd
+    echo
+    
+    # 进程状态详情
+    echo -e "${BLUE}📊 详细状态:${NC}"
+    cat "/proc/$pid/status" | grep -E "(Name|State|Pid|PPid|Threads|VmSize|VmRSS)"
+    echo
+    
+    # 文件描述符使用情况
+    echo -e "${BLUE}📁 文件描述符:${NC}"
+    local fd_count=$(ls "/proc/$pid/fd" 2>/dev/null | wc -l)
+    echo "打开的文件描述符数量: $fd_count"
+    echo
+    
+    # 网络连接
+    echo -e "${BLUE}🌐 网络连接:${NC}"
+    lsof -p "$pid" -i 2>/dev/null | head -10
+    echo
+    
+    # CPU使用历史
+    echo -e "${BLUE}📈 CPU使用监控 (10秒):${NC}"
+    for i in {1..10}; do
+        cpu_usage=$(ps -p "$pid" -o pcpu= 2>/dev/null)
+        if [[ -n "$cpu_usage" ]]; then
+            echo "第${i}秒: ${cpu_usage}%"
+            sleep 1
+        else
+            echo "进程已退出"
+            break
+        fi
+    done
+}
+
+# 使用示例
+if [[ $# -eq 0 ]]; then
+    echo -e "${YELLOW}📋 使用方法: $0 <PID>${NC}"
+    echo -e "${YELLOW}💡 先使用 ps 或 top 找到高CPU进程的PID${NC}"
+    exit 1
+fi
+
+analyze_process "$1"
+```
+
+```bash [第三步：系统资源分析]
+#!/bin/bash
+# 🔧 系统资源综合分析
+
+system_resource_analysis() {
+    echo -e "${GREEN}🔧 系统资源综合分析${NC}"
+    echo "========================================"
+    
+    # CPU信息
+    echo -e "${BLUE}💻 CPU信息:${NC}"
+    lscpu | grep -E "(Model name|CPU\(s\)|Thread|Core|Socket)"
+    echo
+    
+    # 内存使用情况
+    echo -e "${BLUE}💾 内存使用:${NC}"
+    free -h
+    echo
+    
+    # 磁盘IO情况
+    echo -e "${BLUE}💿 磁盘IO:${NC}"
+    iostat -x 1 3 | tail -n +4
+    echo
+    
+    # 系统负载趋势
+    echo -e "${BLUE}📊 负载趋势:${NC}"
+    echo "1分钟负载历史:"
+    sar -q | tail -10
+    echo
+    
+    # 进程统计
+    echo -e "${BLUE}📈 进程统计:${NC}"
+    echo "总进程数: $(ps -e | wc -l)"
+    echo "运行中进程: $(ps -eo stat | grep -c '^R')"
+    echo "睡眠进程: $(ps -eo stat | grep -c '^S')"
+    echo "僵尸进程: $(ps -eo stat | grep -c '^Z')"
+    echo
+    
+    # 系统服务状态
+    echo -e "${BLUE}⚙️ 关键服务状态:${NC}"
+    systemctl is-active sshd NetworkManager chronyd 2>/dev/null | paste <(echo -e "SSH\nNetworkManager\nchronyd") -
+}
+
+system_resource_analysis
+```
+
+:::
+
+##### 🛠️ CPU优化建议 <Badge type="success" text="解决方案" />
+
+::: details 💡 CPU优化策略
+
+**🎯 进程级优化：**
+```bash
+# 调整进程优先级
+nice -n 10 command              # 以低优先级启动进程
+renice -n 5 -p 1234            # 调整现有进程优先级
+ionice -c 3 -p 1234            # 设置IO优先级为idle
+
+# 限制进程CPU使用
+cpulimit -p 1234 -l 50         # 限制进程CPU使用率为50%
+taskset -cp 0,1 1234           # 将进程绑定到特定CPU核心
+```
+
+**⚙️ 系统级优化：**
+```bash
+# 调整系统调度策略
+echo 'performance' > /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+# 禁用不必要的服务
+systemctl disable unnecessary-service
+systemctl stop unnecessary-service
+
+# 优化内核参数
+echo 'vm.swappiness=10' >> /etc/sysctl.conf
+sysctl -p
+```
+
+**📊 监控自动化：**
+```bash
+# 创建CPU监控脚本
+cat > /usr/local/bin/cpu_monitor.sh << 'EOF'
+#!/bin/bash
+THRESHOLD=80
+while true; do
+    CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | sed 's/%us,//')
+    if (( $(echo "$CPU_USAGE > $THRESHOLD" | bc -l) )); then
+        echo "$(date): CPU使用率过高: ${CPU_USAGE}%" >> /var/log/cpu_alert.log
+        # 发送告警邮件或通知
+    fi
+    sleep 60
+done
+EOF
+
+chmod +x /usr/local/bin/cpu_monitor.sh
+```
+
+:::
+
+### 🔍 grep 命令详解与实战
+
+#### ⭐ grep 基础语法 <Badge type="info" text="文本处理核心" />
+
+**grep** (Global Regular Expression Print) 是 Linux 中最重要的文本搜索工具，支持正则表达式和多种搜索模式。
+
+::: tip 为什么掌握 grep？
+- 🔍 **日志分析**：快速从海量日志中提取关键信息
+- 🎯 **精确搜索**：支持正则表达式的强大模式匹配
+- 📊 **数据过滤**：高效处理和筛选文本数据
+- 🔧 **脚本集成**：是自动化脚本的重要组件
+:::
+
+##### 📋 grep 基础用法 <Badge type="info" text="必备" />
+
+::: code-group
+
+```bash [基础搜索]
+# 🔍 基本搜索
+grep "pattern" file.txt         # 在文件中搜索模式
+grep "pattern" file1 file2      # 在多个文件中搜索
+grep "pattern" *.txt            # 在所有txt文件中搜索
+grep -r "pattern" /path/        # 递归搜索目录
+
+# 🎯 大小写控制
+grep -i "pattern" file.txt      # 忽略大小写
+grep -v "pattern" file.txt      # 反向匹配（不包含pattern）
+grep -w "word" file.txt         # 完整单词匹配
+grep -x "line" file.txt         # 完整行匹配
+```
+
+```bash [输出控制]
+# 📊 输出格式控制
+grep -n "pattern" file.txt      # 显示行号
+grep -c "pattern" file.txt      # 只显示匹配行数
+grep -l "pattern" *.txt         # 只显示包含匹配的文件名
+grep -L "pattern" *.txt         # 只显示不包含匹配的文件名
+grep -h "pattern" *.txt         # 不显示文件名
+grep -H "pattern" *.txt         # 总是显示文件名
+
+# 🎨 颜色高亮
+grep --color=always "pattern" file.txt
+grep --color=auto "pattern" file.txt    # 自动检测终端支持
+```
+
+```bash [上下文显示]
+# 📄 显示匹配行的上下文
+grep -A 3 "pattern" file.txt    # 显示匹配行及后3行
+grep -B 3 "pattern" file.txt    # 显示匹配行及前3行
+grep -C 3 "pattern" file.txt    # 显示匹配行及前后3行
+grep -A 2 -B 1 "pattern" file.txt  # 自定义前后行数
+```
+
+:::
+
+##### 🎯 正则表达式详解 <Badge type="warning" text="高级功能" />
+
+::: code-group
+
+```bash [基础正则表达式]
+# 🔤 字符匹配
+grep "^start" file.txt          # 行首匹配
+grep "end$" file.txt            # 行尾匹配
+grep "^$" file.txt              # 空行匹配
+grep "." file.txt               # 任意字符
+grep "a.b" file.txt             # a和b之间有任意一个字符
+
+# 🔢 数量匹配
+grep "a*" file.txt              # 0个或多个a
+grep "a\+" file.txt             # 1个或多个a (需要转义)
+grep "a\?" file.txt             # 0个或1个a (需要转义)
+grep "a\{3\}" file.txt          # 恰好3个a
+grep "a\{2,5\}" file.txt        # 2到5个a
+```
+
+```bash [扩展正则表达式 (-E)]
+# 🚀 使用 -E 选项或 egrep
+grep -E "a+" file.txt           # 1个或多个a (无需转义)
+grep -E "a?" file.txt           # 0个或1个a
+grep -E "a{3}" file.txt         # 恰好3个a
+grep -E "(abc|def)" file.txt    # 匹配abc或def
+grep -E "^(http|https)://" file.txt  # 匹配URL开头
+
+# 📊 字符类
+grep -E "[0-9]+" file.txt       # 匹配数字
+grep -E "[a-zA-Z]+" file.txt    # 匹配字母
+grep -E "[[:digit:]]+" file.txt # 匹配数字（POSIX字符类）
+grep -E "[[:alpha:]]+" file.txt # 匹配字母
+grep -E "[[:alnum:]]+" file.txt # 匹配字母数字
+```
+
+```bash [实用正则表达式模式]
+# 📧 邮箱匹配
+grep -E "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" file.txt
+
+# 🌐 IP地址匹配
+grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" file.txt
+
+# 📱 电话号码匹配
+grep -E "1[3-9][0-9]{9}" file.txt
+
+# 🕐 时间格式匹配
+grep -E "[0-2][0-9]:[0-5][0-9]:[0-5][0-9]" file.txt
+
+# 📅 日期格式匹配
+grep -E "[0-9]{4}-[0-9]{2}-[0-9]{2}" file.txt
+```
+
+:::
+
+##### 🛠️ grep 实战应用 <Badge type="tip" text="实战技巧" />
+
+::: code-group
+
+```bash [日志分析实战]
+# 📊 Web服务器日志分析
+# 查找错误日志
+grep -i "error" /var/log/apache2/error.log
+
+# 查找特定时间段的日志
+grep "2024-01-15 1[0-5]:" /var/log/apache2/access.log
+
+# 统计不同HTTP状态码
+grep -o " [0-9]{3} " /var/log/apache2/access.log | sort | uniq -c
+
+# 查找访问量最高的IP
+grep -o "^[0-9.]*" /var/log/apache2/access.log | sort | uniq -c | sort -nr | head -10
+
+# 查找可疑的访问模式
+grep -E "(sql|union|select|drop|insert)" /var/log/apache2/access.log -i
+```
+
+```bash [系统监控实战]
+# 🔍 系统日志分析
+# 查找系统错误
+grep -i "error\|fail\|critical" /var/log/syslog
+
+# 查找登录失败记录
+grep "Failed password" /var/log/auth.log
+
+# 查找sudo使用记录
+grep "sudo:" /var/log/auth.log
+
+# 监控磁盘空间警告
+grep -i "disk\|space\|full" /var/log/syslog
+
+# 查找内存不足警告
+grep -i "out of memory\|oom" /var/log/syslog
+```
+
+```bash [配置文件处理]
+# ⚙️ 配置文件分析
+# 查找非注释行
+grep -v "^#" /etc/nginx/nginx.conf | grep -v "^$"
+
+# 查找包含特定配置的文件
+grep -r "listen 80" /etc/nginx/
+
+# 查找所有配置文件中的端口配置
+grep -r "port\|listen" /etc/ --include="*.conf" 2>/dev/null
+
+# 查找SSL相关配置
+grep -r -i "ssl\|tls\|certificate" /etc/nginx/ --include="*.conf"
+```
+
+:::
+
+##### 📊 grep 性能优化 <Badge type="success" text="优化技巧" />
+
+::: code-group
+
+```bash [性能优化技巧]
+# 🚀 提升搜索性能
+# 使用固定字符串搜索（更快）
+grep -F "fixed_string" large_file.txt
+
+# 限制搜索深度
+grep -r --max-depth=2 "pattern" /path/
+
+# 排除不必要的文件类型
+grep -r "pattern" /path/ --exclude="*.log" --exclude="*.tmp"
+
+# 只搜索特定文件类型
+grep -r "pattern" /path/ --include="*.txt" --include="*.conf"
+
+# 使用多线程搜索（如果支持）
+grep -r "pattern" /path/ --threads=4
+```
+
+```bash [大文件处理]
+# 📁 处理大文件的技巧
+# 只显示前N个匹配
+grep -m 10 "pattern" huge_file.txt
+
+# 结合其他工具提升效率
+# 先用head/tail限制范围，再用grep
+head -1000 large_file.txt | grep "pattern"
+tail -1000 large_file.txt | grep "pattern"
+
+# 使用zgrep处理压缩文件
+zgrep "pattern" compressed_file.gz
+
+# 并行处理多个文件
+find /path -name "*.log" -print0 | xargs -0 -P 4 grep -l "pattern"
+```
+
+```bash [内存优化]
+# 💾 内存使用优化
+# 使用流处理避免加载整个文件
+cat large_file.txt | grep "pattern" | head -100
+
+# 结合awk进行复杂处理
+grep "pattern" file.txt | awk '{print $1, $3}'
+
+# 使用管道减少中间文件
+grep "error" /var/log/syslog | grep "$(date +%Y-%m-%d)" | wc -l
+```
+
+:::
+
+##### 🔧 grep 高级脚本 <Badge type="tip" text="自动化" />
+
+::: code-group
+
+```bash [日志监控脚本]
+#!/bin/bash
+# 📊 智能日志监控脚本
+
+# 配置参数
+LOG_FILE="/var/log/syslog"
+ERROR_PATTERNS=("error" "fail" "critical" "warning")
+ALERT_EMAIL="admin@example.com"
+TEMP_DIR="/tmp/log_monitor"
+
+# 创建临时目录
+mkdir -p "$TEMP_DIR"
+
+# 颜色定义
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# 日志分析函数
+analyze_logs() {
+    local log_file="$1"
+    local time_range="${2:-1 hour ago}"
+    
+    echo -e "${GREEN}📊 分析日志文件: $log_file${NC}"
+    echo -e "${GREEN}📅 时间范围: $time_range${NC}"
+    echo "========================================"
+    
+    # 获取时间戳
+    local since_time=$(date -d "$time_range" '+%Y-%m-%d %H:%M:%S')
+    
+    # 分析各类错误
+    for pattern in "${ERROR_PATTERNS[@]}"; do
+        echo -e "${YELLOW}🔍 搜索模式: $pattern${NC}"
+        
+        local count=$(grep -i "$pattern" "$log_file" | \
+                     awk -v since="$since_time" '$0 >= since' | wc -l)
+        
+        if [[ $count -gt 0 ]]; then
+            echo -e "${RED}⚠️ 发现 $count 条 $pattern 记录${NC}"
+            
+            # 保存详细信息
+            grep -i "$pattern" "$log_file" | \
+            awk -v since="$since_time" '$0 >= since' > \
+            "$TEMP_DIR/${pattern}_$(date +%Y%m%d_%H%M%S).log"
+            
+            # 显示最新的几条
+            echo "最新记录:"
+            grep -i "$pattern" "$log_file" | \
+            awk -v since="$since_time" '$0 >= since' | tail -3
+        else
+            echo -e "${GREEN}✅ 未发现 $pattern 相关问题${NC}"
+        fi
+        echo
+    done
+}
+
+# 生成报告
+generate_report() {
+    local report_file="$TEMP_DIR/log_report_$(date +%Y%m%d_%H%M%S).txt"
+    
+    echo "日志分析报告" > "$report_file"
+    echo "生成时间: $(date)" >> "$report_file"
+    echo "=======================================" >> "$report_file"
+    
+    # 系统概况
+    echo "系统负载: $(uptime)" >> "$report_file"
+    echo "磁盘使用: $(df -h / | tail -1)" >> "$report_file"
+    echo "内存使用: $(free -h | grep Mem)" >> "$report_file"
+    echo "" >> "$report_file"
+    
+    # 错误统计
+    echo "错误统计:" >> "$report_file"
+    for pattern in "${ERROR_PATTERNS[@]}"; do
+        local count=$(find "$TEMP_DIR" -name "${pattern}_*.log" -exec wc -l {} + 2>/dev/null | tail -1 | awk '{print $1}')
+        echo "$pattern: ${count:-0} 条" >> "$report_file"
+    done
+    
+    echo -e "${GREEN}📄 报告已生成: $report_file${NC}"
+}
+
+# 主函数
+main() {
+    echo -e "${GREEN}🚀 开始日志监控分析...${NC}"
+    
+    if [[ ! -f "$LOG_FILE" ]]; then
+        echo -e "${RED}❌ 日志文件不存在: $LOG_FILE${NC}"
+        exit 1
+    fi
+    
+    analyze_logs "$LOG_FILE" "${1:-1 hour ago}"
+    generate_report
+    
+    echo -e "${GREEN}✅ 分析完成！${NC}"
+    echo -e "${YELLOW}💡 查看详细日志: ls $TEMP_DIR/${NC}"
+}
+
+# 执行主函数
+main "$@"
+```
+
+```bash [文本处理工具集]
+#!/bin/bash
+# 🔧 grep 文本处理工具集
+
+# 工具函数集合
+text_tools() {
+    local operation="$1"
+    shift
+    
+    case "$operation" in
+        "extract_emails")
+            # 📧 提取邮箱地址
+            grep -E -o "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" "$@"
+            ;;
+        "extract_ips")
+            # 🌐 提取IP地址
+            grep -E -o "([0-9]{1,3}\.){3}[0-9]{1,3}" "$@"
+            ;;
+        "extract_urls")
+            # 🔗 提取URL
+            grep -E -o "https?://[a-zA-Z0-9./?=_%:-]*" "$@"
+            ;;
+        "remove_comments")
+            # 🗑️ 移除注释行
+            grep -v "^#" "$@" | grep -v "^//" | grep -v "^$"
+            ;;
+        "find_duplicates")
+            # 🔍 查找重复行
+            sort "$@" | uniq -d
+            ;;
+        "count_words")
+            # 📊 统计词频
+            grep -o -E "\w+" "$@" | sort | uniq -c | sort -nr
+            ;;
+        "extract_numbers")
+            # 🔢 提取数字
+            grep -E -o "[0-9]+" "$@"
+            ;;
+        "clean_whitespace")
+            # 🧹 清理多余空白
+            grep -v "^[[:space:]]*$" "$@" | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//'
+            ;;
+        *)
+            echo -e "${RED}❌ 未知操作: $operation${NC}"
+            echo "支持的操作:"
+            echo "  extract_emails   - 提取邮箱地址"
+            echo "  extract_ips      - 提取IP地址"
+            echo "  extract_urls     - 提取URL"
+            echo "  remove_comments  - 移除注释"
+            echo "  find_duplicates  - 查找重复行"
+            echo "  count_words      - 统计词频"
+            echo "  extract_numbers  - 提取数字"
+            echo "  clean_whitespace - 清理空白"
+            return 1
+            ;;
+    esac
+}
+
+# 使用示例
+if [[ $# -lt 2 ]]; then
+    echo -e "${YELLOW}📋 使用方法: $0 <operation> <file...>${NC}"
+    text_tools "help"
+    exit 1
+fi
+
+text_tools "$@"
+```
+
+:::
+
+---
+
 ## 📚 总结与展望 <Badge type="success" text="完结" />
 
 ::: tip 🎉 恭喜完成学习！
