@@ -93,7 +93,8 @@ export default withMermaid(defineConfigWithTheme({
                     {
                         text: '☁️ SpringCloud',
                         items: [
-                            {text: 'SpringCloud', link: '/后端/SpringCloud/README'}
+                            {text: 'SpringCloud', link: '/后端/SpringCloud/README'},
+                            {text: 'SpringCloud Gateway', link: '/后端/SpringCloud/SpringCloud Gateway'}
                         ]
                     },
                     {
@@ -145,6 +146,14 @@ export default withMermaid(defineConfigWithTheme({
                             {text: 'MySQL 日志与备份篇', link: '/数据库/MySQL/MySQL日志与备份篇'},
                             {text: 'MySQL 事务篇', link: '/数据库/MySQL/MySQL事务篇'}
                         ]
+                    },
+                    {
+                        text: '🐘 PostgreSQL',
+                        link: '/数据库/PostgreSQL/PostgreSQL'
+                    },
+                    {
+                        text: '⚡ TDengine',
+                        link: '/数据库/TDengine/TDengine'
                     },
                     {
                         text: '🔴 Redis',
@@ -268,6 +277,18 @@ export default withMermaid(defineConfigWithTheme({
                     text: '🗄️ MySQL',
                     items: [
                         {text: 'MySQL', link: '/数据库/MySQL/README'}
+                    ]
+                },
+                {
+                    text: '🐘 PostgreSQL',
+                    items: [
+                        {text: 'PostgreSQL', link: '/数据库/PostgreSQL/PostgreSQL'}
+                    ]
+                },
+                {
+                    text: '⚡ TDengine',
+                    items: [
+                        {text: 'TDengine', link: '/数据库/TDengine/TDengine'}
                     ]
                 },
                 {
