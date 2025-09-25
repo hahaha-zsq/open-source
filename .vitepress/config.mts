@@ -81,7 +81,8 @@ export default withMermaid(defineConfigWithTheme({
                     {
                         text: '🗄️ 持久层框架',
                         items: [
-                            {text: 'MyBatis 自定义拦截器', link: '/后端/持久层框架/mybatis'}
+                            {text: 'MyBatis 自定义拦截器', link: '/后端/持久层框架/mybatis'},
+                            {text: 'JdbcTemplate 详解', link: '/后端/持久层框架/jdbcTemplate'}
                         ]
                     },
                     {
@@ -104,7 +105,8 @@ export default withMermaid(defineConfigWithTheme({
                             {text: 'Kafka', link: '/后端/中间件/Kafka/README'},
                             {text: 'Elasticsearch', link: '/后端/中间件/Elasticsearch/README'},
                             {text: 'XXL-JOB', link: '/后端/中间件/XXL-JOB/README'},
-                            {text: 'Minio', link: '/后端/中间件/Minio/README'}
+                            {text: 'Minio', link: '/后端/中间件/Minio/README'},
+                            {text: 'Netty', link: '/后端/中间件/Netty/Netty'}
                         ]
                     }
                 ]
@@ -222,7 +224,8 @@ export default withMermaid(defineConfigWithTheme({
                 {
                     text: '🗄️ 持久层框架',
                     items: [
-                        {text: 'MyBatis 自定义拦截器', link: '/后端/持久层框架/mybatis'}
+                        {text: 'MyBatis 自定义拦截器', link: '/后端/持久层框架/mybatis'},
+                        {text: 'JdbcTemplate 详解', link: '/后端/持久层框架/jdbcTemplate'}
                     ]
                 },
                 {
@@ -244,7 +247,8 @@ export default withMermaid(defineConfigWithTheme({
                         {text: 'Kafka', link: '/后端/中间件/Kafka/README'},
                         {text: 'Elasticsearch', link: '/后端/中间件/Elasticsearch/README'},
                         {text: 'XXL-JOB', link: '/后端/中间件/XXL-JOB/README'},
-                        {text: 'Minio', link: '/后端/中间件/Minio/README'}
+                        {text: 'Minio', link: '/后端/中间件/Minio/README'},
+                        {text: 'Netty', link: '/后端/中间件/Netty/Netty'}
                     ]
                 }
             ],

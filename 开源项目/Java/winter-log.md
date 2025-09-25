@@ -233,6 +233,107 @@ winter-log-spring-boot-starter/
     └── META-INF/             # Spring Boot自动配置
 ```
 
+## 📋 日志触发机制详解
+
+### 🔍 正常操作日志触发条件
+
+正常操作日志的记录需要同时满足以下**所有条件**：
+
+1. **✅ 启用日志功能**：在启动类上添加 `@EnableWinterLog` 注解
+2. **✅ 方法注解**：目标方法必须使用 `@SystemLog` 注解标记
+3. **✅ 方法正常执行**：方法执行完成且未抛出异常
+4. **✅ 执行时间满足条件**：方法执行时间 ≥ 配置的 `run-time` 阈值（默认0毫秒）
+
+**触发流程**：
+```
+@Before → 记录请求信息 → 方法执行 → @AfterReturning → 记录响应信息 → 判断执行时间 → 调用logHandler
+```
+
+### ⚠️ 异常日志触发条件
+
+异常日志的记录机制与操作日志**完全独立**，触发条件如下：
+
+1. **✅ 启用日志功能**：在启动类上添加 `@EnableWinterLog` 注解
+2. **✅ Controller层方法**：异常发生在 `*..controller.*.*(..)` 包路径的方法中
+3. **✅ 异常未被捕获**：异常必须从Controller方法中抛出（未被try-catch处理）
+
+**重要说明**：
+- 🚫 **不需要** `@SystemLog` 注解：异常日志会自动记录所有Controller层的异常
+- 🚫 **不受** `run-time` 配置影响：异常日志不考虑执行时间
+- ✅ **独立触发**：即使方法没有 `@SystemLog` 注解，异常日志仍会记录
+
+### 🔄 异常处理对日志记录的影响
+
+#### 1. Try-Catch 处理的影响
+
+**❌ 异常日志不会触发的情况**：
+```java
+@RestController
+public class UserController {
+    
+    @SystemLog(operationModule = "用户管理", operationType = OperationLogType.ADD)
+    @PostMapping("/user")
+    public Result<?> addUser(@RequestBody UserDTO userDTO) {
+        try {
+            // 业务代码可能抛出异常
+            userService.addUser(userDTO);
+            return Result.ok();
+        } catch (Exception e) {
+            // ❌ 异常被捕获，异常日志不会记录
+            log.error("添加用户失败", e);
+            return Result.error("添加用户失败");
+        }
+    }
+}
+```
+
+**✅ 异常日志会触发的情况**：
+```java
+@RestController  
+public class UserController {
+    
+    @SystemLog(operationModule = "用户管理", operationType = OperationLogType.ADD)
+    @PostMapping("/user")
+    public Result<?> addUser(@RequestBody UserDTO userDTO) {
+        // ✅ 异常未被捕获，会从方法中抛出，异常日志会记录
+        userService.addUser(userDTO); // 可能抛出RuntimeException
+        return Result.ok();
+    }
+}
+```
+
+#### 2. 全局异常处理器的影响
+
+**✅ 异常日志仍会触发**：
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(Exception.class)
+    public Result<?> handleException(Exception e) {
+        // ✅ 即使有全局异常处理器，异常日志仍会记录
+        // 因为异常已经从Controller方法中抛出，@AfterThrowing会先执行
+        return Result.error("系统异常");
+    }
+}
+```
+
+**执行顺序**：
+```
+Controller方法抛出异常 → @AfterThrowing记录异常日志 → 全局异常处理器处理异常
+```
+
+### 📊 日志记录场景总结
+
+| 场景 | @SystemLog注解 | 方法执行结果 | 操作日志 | 异常日志 |
+|------|---------------|-------------|----------|----------|
+| 正常执行 | ✅ 有 | ✅ 成功 | ✅ 记录 | ❌ 不记录 |
+| 正常执行 | ❌ 无 | ✅ 成功 | ❌ 不记录 | ❌ 不记录 |
+| 异常未捕获 | ✅ 有 | ❌ 抛出异常 | ❌ 不记录 | ✅ 记录 |
+| 异常未捕获 | ❌ 无 | ❌ 抛出异常 | ❌ 不记录 | ✅ 记录 |
+| 异常被try-catch | ✅ 有 | ✅ 成功返回 | ✅ 记录 | ❌ 不记录 |
+| 异常被try-catch | ❌ 无 | ✅ 成功返回 | ❌ 不记录 | ❌ 不记录 |
+
 ## 🔔 注意事项
 
 - 必须在启动类上添加 `@EnableWinterLog` 注解才能启用日志功能
@@ -240,6 +341,8 @@ winter-log-spring-boot-starter/
 - 可通过 `run-time` 参数控制只记录执行时间超过阈值的方法
 - 密码等敏感信息（包含 `password` 关键字）会被自动过滤（显示为 `***`）
 - 支持文件上传等特殊请求类型的日志记录
+- **异常日志只记录Controller层未被捕获的异常**
+- **操作日志和异常日志是两个独立的记录机制**
 
 ## 🤝 贡献指南
 
@@ -261,4 +364,4 @@ winter-log-spring-boot-starter/
 - 邮箱：2595915122@qq.com
 - 版本：v0.0.1
 
-> ❤️ 欢迎 Star & PR，更多特性敬请期待！ 
+> ❤️ 欢迎 Star & PR，更多特性敬请期待！
