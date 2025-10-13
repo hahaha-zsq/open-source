@@ -11,9 +11,6 @@ hero:
     - theme: brand
       text: 探索项目
       link: /开源项目/README
-    - theme: alt
-      text: 快速开始
-      link: /开源项目/Java/winter-encrypt
 
 features:
   - title: 🚀 AWS S3 分片上传系统
@@ -24,6 +21,8 @@ features:
     details: Spring Boot 加解密工具包，支持 AES/DES/RSA 算法，注解式加解密，集合类型全覆盖，生产环境验证
   - title: 📝 Winter Log
     details: 轻量级日志记录组件，基于 AOP 自动捕获操作日志和异常日志，支持自定义处理和多种输出格式
+  - title: 🌍 Winter I18n
+    details: 轻量级、高性能的 Spring Boot 国际化解决方案，精确语言匹配与灵活消息源，支持数据库与 Redis 动态国际化
   - title: 🛠️ dadandiaoming-cli
     details: 现代化命令行脚手架工具，基于 Node.js 和 TypeScript 构建，支持项目模板生成、代码规范检查和自动化部署
   - title: 🐳 Shortcut-Script
