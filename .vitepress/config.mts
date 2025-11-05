@@ -43,10 +43,10 @@ export default withMermaid(defineConfigWithTheme({
                         text: '☕ 后端项目',
                         items: [
                             {text: 'AWS S3 分片上传', link: '/开源项目/Java/aws-s3-upload'},
-                            {text: 'Winter I18n', link: '/开源项目/Java/winter-i18n'},
                             {text: 'Winter Encrypt', link: '/开源项目/Java/winter-encrypt'},
                             {text: 'Winter Log', link: '/开源项目/Java/winter-log'},
                             {text: 'Winter Minio', link: '/开源项目/Java/winter-minio'},
+                            {text: 'Winter Redis DCC', link: '/开源项目/Java/winter-redis-ddc'},
                         ]
                     },
                     {
@@ -190,10 +190,10 @@ export default withMermaid(defineConfigWithTheme({
                     text: '☕ 后端项目',
                     items: [
                         {text: 'AWS S3 分片上传', link: '/开源项目/Java/aws-s3-upload'},
-                        {text: 'Winter I18n', link: '/开源项目/Java/winter-i18n'},
                         {text: 'Winter Encrypt', link: '/开源项目/Java/winter-encrypt'},
                         {text: 'Winter Log', link: '/开源项目/Java/winter-log'},
                         {text: 'Winter Minio', link: '/开源项目/Java/winter-minio'},
+                        {text: 'Winter Redis DCC', link: '/开源项目/Java/winter-redis-ddc'},
                     ]
                 },
                 {

@@ -11,7 +11,18 @@ outline: deep
 
 <div class="badge-container" align="center">
 
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg)](https://spring.io/projects/spring-boot)[![Java](https://img.shields.io/badge/Java-8%2B-orange.svg)](https://www.oracle.com/java/)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![Maven Central](https://img.shields.io/badge/Maven%20Central-0.0.3-blue.svg)](https://search.maven.org/)  
+<a href="https://spring.io/projects/spring-boot">
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg?style=for-the-badge&logo=springboot&logoColor=6DB33F" alt="Spring Boot">
+</a>
+<a href="https://www.oracle.com/java/">
+  <img src="https://img.shields.io/badge/Java-8%2B-orange.svg?style=for-the-badge&logo=java&logoColor=007396" alt="Java">
+</a>
+<a href="https://opensource.org/licenses/Apache-2.0">
+  <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge&logo=apache&logoColor=D22128" alt="License">
+</a>
+<a href="https://search.maven.org/">
+  <img src="https://img.shields.io/badge/Maven%20Central-0.0.3-blue.svg?style=for-the-badge&logo=apachemaven&logoColor=C71A36" alt="Maven Central">
+</a>  
 
 </div>
 

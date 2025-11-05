@@ -2,9 +2,15 @@
 
 <div class="badge-container" align="center">
 
-[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![Java support](https://img.shields.io/badge/Java-1.8+-green.svg)](https://openjdk.java.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg)](https://spring.io/projects/spring-boot)
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html">
+  <img src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=for-the-badge&logo=apache&logoColor=D22128" alt="License">
+</a>
+<a href="https://openjdk.java.net/">
+  <img src="https://img.shields.io/badge/Java-1.8+-green.svg?style=for-the-badge&logo=openjdk&logoColor=437291" alt="Java support">
+</a>
+<a href="https://spring.io/projects/spring-boot">
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg?style=for-the-badge&logo=springboot&logoColor=6DB33F" alt="Spring Boot">
+</a>
 
 </div>
 

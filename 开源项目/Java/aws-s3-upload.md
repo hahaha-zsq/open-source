@@ -10,11 +10,11 @@ head:
 # 🚀 AWS S3 分片上传系统
 
 <div class="badge-container" align="center">
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.6+-brightgreen?style=for-the-badge&logo=springboot" alt="Spring Boot">
-  <img src="https://img.shields.io/badge/Vue.js-3.0+-4FC08D?style=for-the-badge&logo=vue.js" alt="Vue.js">
-  <img src="https://img.shields.io/badge/AWS%20S3-FF9900?style=for-the-badge&logo=amazons3" alt="AWS S3">
-  <img src="https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql" alt="MySQL">
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.6+-brightgreen?style=for-the-badge&logo=springboot&logoColor=6DB33F" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/Vue.js-3.0+-4FC08D?style=for-the-badge&logo=vue.js&logoColor=4FC08D" alt="Vue.js">
+  <img src="https://img.shields.io/badge/AWS%20S3-FF9900?style=for-the-badge&logo=minio&logoColor=C72E49" alt="AWS S3">
+  <img src="https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=4479A1" alt="MySQL">
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=3178C6" alt="TypeScript">
 </div>
 
 ::: tip 项目简介

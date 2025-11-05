@@ -2,7 +2,21 @@
 
 <div class="badge-container" align="center">
 
-[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html) [![Java support](https://img.shields.io/badge/Java-1.8+-green.svg)](https://openjdk.java.net/) [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg)](https://spring.io/projects/spring-boot) [![Maven Central](https://img.shields.io/maven-central/v/io.github.hahaha-zsq/winter-encrypt-spring-boot-starter.svg)](https://search.maven.org/artifact/io.github.hahaha-zsq/winter-encrypt-spring-boot-starter) [![GitHub stars](https://img.shields.io/github/stars/hahaha-zsq/winter-encrypt-spring-boot-starter.svg?style=social&label=Stars)](https://github.com/hahaha-zsq/winter-encrypt-spring-boot-starter)
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html">
+  <img src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=for-the-badge&logo=apache&logoColor=D22128" alt="License">
+</a>
+<a href="https://openjdk.java.net/">
+  <img src="https://img.shields.io/badge/Java-1.8+-green.svg?style=for-the-badge&logo=openjdk&logoColor=437291" alt="Java support">
+</a>
+<a href="https://spring.io/projects/spring-boot">
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.6+-blue.svg?style=for-the-badge&logo=springboot&logoColor=6DB33F" alt="Spring Boot">
+</a>
+<a href="https://search.maven.org/artifact/io.github.hahaha-zsq/winter-encrypt-spring-boot-starter">
+  <img src="https://img.shields.io/maven-central/v/io.github.hahaha-zsq/winter-encrypt-spring-boot-starter.svg?style=for-the-badge&logo=apachemaven&logoColor=C71A36" alt="Maven Central">
+</a>
+<a href="https://github.com/hahaha-zsq/winter-encrypt-spring-boot-starter">
+  <img src="https://img.shields.io/github/stars/hahaha-zsq/winter-encrypt-spring-boot-starter.svg?style=for-the-badge&logo=github&logoColor=181717" alt="GitHub stars">
+</a>
 
 </div>
 
