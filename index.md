@@ -28,6 +28,8 @@ features:
     details: 一个功能强大的 Redis 工具包，基于 Spring Boot 和 Redisson 构建，提供分布式锁、限流、布隆过滤器、动态配置中心等企业级功能。
   - title: 🛠️ dadandiaoming-cli
     details: 现代化命令行脚手架工具，基于 Node.js 和 TypeScript 构建，支持项目模板生成、代码规范检查和自动化部署
+  - title: 📮Winter Local Message Spring Boot Starter
+    details:  一个基于 Spring Boot 的本地任务消息可靠投递框架，支持 HTTP、RabbitMQ、Kafka、RocketMQ 多种通知方式的可靠消息投递解决方案。
   - title: 🐳 Shortcut-Script
     details: CentOS 7 自动化部署脚本，一键安装 Docker、MySQL、Redis、Nginx 等常用服务，支持离线部署
 ---

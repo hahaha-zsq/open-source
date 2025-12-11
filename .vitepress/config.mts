@@ -47,6 +47,7 @@ export default withMermaid(defineConfigWithTheme({
                             {text: 'Winter Log', link: '/开源项目/Java/winter-log'},
                             {text: 'Winter Minio', link: '/开源项目/Java/winter-minio'},
                             {text: 'Winter Redis DCC', link: '/开源项目/Java/winter-redis-ddc'},
+                            {text: 'Winter Local Message', link: '/开源项目/Java/winter-local-message'},
                         ]
                     },
                     {
