@@ -173,7 +173,7 @@ graph TB
 
 ```java
 // 门牌号计算规则
-int houseNumber = Math.abs(taskId.hashCode()) % 100;
+int houseNumber = Math.abs(taskId.hashCode()) % 10;
 ```
 
 ::: tip 扩展性
